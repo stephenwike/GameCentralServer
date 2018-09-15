@@ -15,7 +15,7 @@ router.get('/config', function(req, res) {
 });
 
 router.get('/catan', function(req, res) {
-	res.sendFile('views/catan.html', { root : __dirname });
+	res.sendFile('views/Catan/catan.html', { root : __dirname });
 });
 
 module.exports.router = router;

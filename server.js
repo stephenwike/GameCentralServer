@@ -12,38 +12,43 @@ var tv_app_port = 3000;
 var an_app_port = 4000;
 
 // socket io +===================================================================
+var playercount = 0;
+
 tv_io.on('connection', (socket) => 
 {	
 	console.log("TV connected, id: " + socket.id);
 	
 	// Start listening for android apps
-	an_server.listen(an_app_port, () => {
-		console.log("Listening on port " + an_app_port);
-	});
+	an_server.listen(an_app_port, () => {console.log("Listening on port " + an_app_port);});
 	
 	socket.on('disconnect', (args) =>
 	{
 		// Close server for android app until tv reconnects
 		console.log("TV disconnected, id: " + socket.id);
-		//an_server.close();
-		//console.log("Closing app server");
+		
+		// Emit tv disconnect to all players
+		
+		
+		// Close app server
+		an_server.close();
+		console.log("Closing app server");
 	});
 	
 	// Forward all events to android(s)
-	var onevent = socket.onevent;
-	socket.onevent = function (packet) 
-	{
-		var args = packet.data || [];
-		onevent.call (this, packet);    // original call
-		packet.data = ["*"].concat(args);
-		onevent.call(this, packet);      // additional call to catch-all
-	};
-	
+	//var onevent = socket.onevent;
+	//socket.onevent = function (packet) 
+	//{
+	//	var args = packet.data || [];
+	//	onevent.call (this, packet);    // original call
+	//	packet.data = ["*"].concat(args);
+	//	onevent.call(this, packet);      // additional call to catch-all
+	//};
+	//
 	//socket.on('*', (evt, data) =>
 	//{
 	//	console.log("EVENT " + evt + ", DATA: "); 
 	//	console.log(data);
-	//	if (data["id"] == "*")
+	//	if (data["id"] == "*") 
 	//	{
 	//		an_io.emit(evt, data);
 	//	}
@@ -57,16 +62,24 @@ tv_io.on('connection', (socket) =>
 an_io.on('connection', (socket) => 
 {
 	console.log("App connected, id: " + socket.id);
-	//loginCount++;
-	var args = { "id": socket.id };
-	tv_io.emit('newconnect', args);
+	playercount++;
+	
+	var args = { "id": socket.id, "count": playercount };
+	tv_io.emit('playerconnect', args);
 	
 	socket.on('disconnect', (args) =>
 	{
-		loginCount--;
-		args = { "count": loginCount };
+		args = { "id": socket.id, "count": playercount };
+		tv_io.emit('playerdisconnect', args);
+		
 		console.log("App disconnected, id: " + socket.id);
-		tv_io.emit('disconnect', args);
+		//tv_io.emit('disconnect', args);
+		playercount--;
+	});
+	
+	socket.on('test', (args) =>
+	{
+		console.log("Test call caught");
 	});
 	
 	// Forward all events to tv

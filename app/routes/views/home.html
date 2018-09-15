@@ -10,16 +10,57 @@
             <input id="chat_input" type="text">
             <input type="submit" value="Send">
         </form>
-         <script src="/jquery/dist/jquery.js"></script>
+		<div id="playerLog">
+		</div>
         <script src="/socket.io/socket.io.js"></script>
 		<script>  
+			var RootLocation = document.location;
+		
 			var socket = io.connect();
 			socket.on('connect', function(data) {
-				socket.emit('join', 'Hello World from client');
+				socket.emit('join', 'Hello World from kiosk');
 			});
 			
-			socket.on('test', function() {
-				document.location = "./config";
+			socket.on('playerconnect', function(data) {
+				console.log("Player connected!");
+				console.log(data);
+				
+				// Create Player Paragraph
+				var player = document.createElement('p');
+				player.id = data.id;
+				var text = document.createTextNode(data.id);
+				player.appendChild(text);
+				
+				// Append player to view
+				var container = document.getElementById('playerLog');
+				container.appendChild(player);
+				
+				// Alert application player successfully connected
+				//socket.emit('playerconnected', data);
+			});
+			
+			socket.on('playerdisconnect', function(data) {
+				console.log("Player disconnected!");
+				console.log(data);
+				
+				// Remove Player Display
+				var player = document.getElementById(data.id);
+				player.parentNode.removeChild(player);
+				
+				//socket.emit('playerdisconnected');
+			});
+			
+			socket.on('loadconfig', function(data) {
+				console.log("loading Config");
+				document.location = RootLocation + "config";
+			});
+			
+			socket.on('loadgame', function(data) {
+				console.log("loading Game");
+				var path = RootLocation + data.gameName;
+				console.log("PATH: " + path + path);
+				
+				document.location = path;
 			});
 		</script>  
     </body>
