@@ -1,21 +1,22 @@
-var express = require('express');
-var router = express.Router();
+var exphbs = require('express-handlebars');
 
-router.use(function(req, res, next) {
-  console.log('Something is happening.');
-  next();
-});
+module.exports.SetupRouting = function (tv_app)
+{
+	tv_app.engine('handlebars', exphbs({
+		defaultLayout: 'main', 
+		layoutsDir: 'app/views/layouts'
+	}));
+	tv_app.set('view engine', 'handlebars');
 
-router.get('/', function(req, res) {
-	res.sendFile('views/home.html', { root : __dirname });
-});
+	tv_app.get('/', function (req, res) {
+		res.render('appviews/home/home');
+	});
+	tv_app.get('/config', function (req, res) {
+		res.render('appviews/config');
+	});
+	tv_app.get('/catan', function(req, res) {
+		res.render('catan');
+	});
+}
 
-router.get('/config', function(req, res) {
-	res.sendFile('views/config.html', { root : __dirname });
-});
-
-router.get('/catan', function(req, res) {
-	res.sendFile('views/Catan/catan.html', { root : __dirname });
-});
-
-module.exports.router = router;
+// routes =======================================================================

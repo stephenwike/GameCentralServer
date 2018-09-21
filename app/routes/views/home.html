@@ -10,15 +10,16 @@
             <input id="chat_input" type="text">
             <input type="submit" value="Send">
         </form>
-		<div id="playerLog">
-		</div>
+		<div id="playerCount"></div>
+		<div id="playerLog"></div>
+		
         <script src="/socket.io/socket.io.js"></script>
 		<script>  
 			var RootLocation = document.location;
 		
 			var socket = io.connect();
 			socket.on('connect', function(data) {
-				socket.emit('join', 'Hello World from kiosk');
+				// Get 
 			});
 			
 			socket.on('playerconnect', function(data) {
@@ -58,7 +59,7 @@
 			socket.on('loadgame', function(data) {
 				console.log("loading Game");
 				var path = RootLocation + data.gameName;
-				console.log("PATH: " + path + path);
+				console.log("PATH: " + path);
 				
 				document.location = path;
 			});

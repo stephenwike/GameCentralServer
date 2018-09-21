@@ -1,0 +1,59 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+#GlobalContainer {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("../img/alterplus.gif");
+}
+
+.largeRect {
+    position: absolute;
+    left: 15%;
+    top: 0%;
+    right: 15%;
+    bottom: 0;
+}
+
+#LogoContainer {
+    background-image: url("../img/GC Logo.svg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+    opacity: 0.04;
+}
+
+#LogoTrace {
+    background-image: url("../img/GC Logo Outline.svg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+    opacity: 0.45;
+}
+
+#BackgroundMasking {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(242, 226, 255, 0.985);
+    height: 100%;
+}
+
+#TitleContainer {
+    position: absolute;
+    left: 15%;
+    top: 0;
+    right: 15%;
+    bottom: 2.5%;
+    background-image: url("../img/Title.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+}

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Game Central Kiosk</title>
+</head>
+<body>
+ 
+    {{{body}}}
+  
+	<script src="/socket.io/socket.io.js"></script>
+	<script>  
+		var RootLocation = document.location;
+		var connections = 0;
+	
+		var socket = io.connect();
+		socket.on('connect', function(data) {
+
+			socket.emit('getconnectionlist', {"id": socket.id});
+
+			var ConfigContainer = document.getElementById('ConfigContainer');
+			if (typeof(ConfigContainer) != 'undefined' && ConfigContainer != null)
+			{
+				socket.emit("getgameconfig", {"id": socket.id});	
+			}
+		});
+		
+		socket.on('updateconnectionslist', function(data) {
+			console.log("Updating connected!");
+			console.log(data);
+			
+			var usernames = Object.keys(data);
+			connections = usernames.length;
+
+			// If there are no connections, go back to main screen
+			if (connections === 0)
+			{
+				document.location = "./";
+			}
+
+			// Update player count
+			var playerCountContainer = document.getElementById('playerCount');
+			if (typeof(playerCountContainer) != 'undefined' && playerCountContainer != null)
+			{
+				ClearElement(playerCountContainer)
+				
+				if (usernames.length > 0)
+				{
+					var count = document.createElement('p');
+					var text = document.createTextNode(connections);
+					count.appendChild(text);
+					playerCountContainer.appendChild(count);
+				}
+				
+			}
+
+			// Update player log with list of usernames
+			var playerLogContainer = document.getElementById('playerLog');
+			if (typeof(playerLogContainer) != 'undefined' && playerLogContainer != null)
+			{
+				// Clear the player log container
+				ClearElement(playerLogContainer)
+	
+				for (var index = 0; index < usernames.length; ++index)
+				{
+					var player = document.createElement('p');
+					var text = document.createTextNode(usernames[index]);
+					player.appendChild(text);
+					playerLogContainer.appendChild(player);
+				}
+			}
+		});
+	
+		socket.on('loadconfig', function(data) {
+			console.log("loading Config");
+			document.location = RootLocation + "config";
+		});
+
+		socket.on('configresult', function(config) {
+			console.log("CONFIG RESULT: ");
+			console.log(config);
+
+			// Load Game Name
+			var ConfigGameName = document.getElementById('ConfigGameName');
+			if (typeof(ConfigGameName) != 'undefined' && ConfigGameName != null)
+			{
+				ClearElement(ConfigGameName);
+
+				var gameName = document.createElement('h1');
+				var text = document.createTextNode(config["Game"]);
+				gameName.appendChild(text);
+				ConfigGameName.appendChild(gameName);
+			}
+
+			// Load Config options
+			var options = config.config;
+
+			var ConfigContainer = document.getElementById('ConfigContainer');
+			if (typeof(ConfigContainer) != 'undefined' && ConfigContainer != null)
+			{
+				ClearElement(ConfigContainer);
+
+				for (var index = 0; index < options.length; ++index)
+				{
+					var selectionType = options[index].SelectionType;
+					
+					CreateOptionsNode(options[index]);
+				}
+			}
+		});
+		
+		socket.on('loadgame', function(data) {
+			console.log("loading Game");
+			var path = RootLocation + data.gameName;
+			console.log("PATH: " + path);
+			
+			document.location = path;
+		});
+
+		function ClearElement(element)
+		{
+			while (element.firstChild) {
+   				element.removeChild(element.firstChild);
+			}
+		}
+
+		function CreateOptionsNode(options)
+		{
+			console.log(options);
+			var ConfigContainer = document.getElementById('ConfigContainer');
+
+			// Create Title
+			var title = document.createElement('h2');
+			var titleText = document.createTextNode(options.Title);
+			title.appendChild(titleText);
+			ConfigContainer.appendChild(title);
+			
+			// Create Description
+			var desc = document.createElement('h3');
+			var descText = document.createTextNode(options.Description);
+			desc.appendChild(descText);
+			ConfigContainer.appendChild(desc);
+
+			// Create Selected
+			var selected = document.createElement('h1');
+			var selectedText = document.createTextNode(options.Selected);
+			selected.appendChild(selectedText);
+			ConfigContainer.appendChild(selected);
+			
+		}
+	</script>  
+</body>
+</html>
