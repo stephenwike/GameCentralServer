@@ -3,16 +3,16 @@ const MinClusters = 3; // Can have no users connected.
 const MaxClusters = 8; // Maximum number of connected users possible (or at least that can display.
 const ClusterMaxRadius = 80;
 const ClusterMinRadius = 65;
-const ClusterRotationSpeed = 0.008;
+const ClusterRotationSpeed = 0.001;
 
 const CoinMaxRadius = 25;
 const CoinMinRadius = 7;
-const CoinMaxCount = 8;
-const CoinMinCount = 6;
+const CoinMaxCount = 4;
+const CoinMinCount = 3;
 const CoinMinOffset = 8;
 const CoinMaxDeltaTheta = 0.03;
-const CoinExternalConnectionRatio = 0.05;
-const CoinExternalMinConnections = 2;
+const CoinExternalConnectionRatio = 0.02;
+const CoinExternalMinConnections = 1;
 
 const AnimationMaxRadius = 40;
 const AnimationMinRadius = 20;
