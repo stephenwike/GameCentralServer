@@ -26,15 +26,16 @@ function RenderCoin(coin)
 	var ctx = getContext();
 	ctx.beginPath();
 	ctx.arc(coin.X, coin.Y, coin.R, 0, 2*Math.PI);
-	ctx.fillStyle = "blue";
 	
 	var grd = ctx.createLinearGradient(coin.X - coin.R, coin.Y - coin.R, coin.X + coin.R, coin.Y + coin.R);
-
-	grd.addColorStop(0, "rgba(0, 153, 238, 0.9)");
-	grd.addColorStop(1, "rgba(0, 51, 170, 0.9)");
+	grd.addColorStop(0, "rgba(0, 255, 85, 0.8)");
+	grd.addColorStop(1, "rgba(0, 128, 43, 0.8)");
 	ctx.fillStyle = grd;
-	
 	ctx.fill();
+
+	ctx.lineWidth = 4;
+	ctx.strokeStyle = "#444";
+	ctx.stroke();
 }
 
 function DrawLines()
@@ -154,7 +155,7 @@ function DrawLine(currCircle, targetCircle)
 		context.lineTo(TargetX - TargetXOffset, TargetY - TargetYOffset);
 		
 		context.lineWidth = 0.2;
-		context.strokeStyle = '#CCC';
+		context.strokeStyle = "black";
 		context.stroke();
 	}
 	catch (err)
@@ -194,7 +195,7 @@ function RenderNames()
 function RenderName(cluster)
 {
 	var ctx = getContext();
-	ctx.font = "60px Arial";
+	ctx.font = "30px Arial";
 	ctx.textAlign = "center";
 	ctx.fillStyle = "Green";
 	ctx.fillText(cluster.Name, cluster.X, cluster.Y + cluster.R);

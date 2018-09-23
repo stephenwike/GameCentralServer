@@ -15,7 +15,7 @@
 .largeRect {
     position: absolute;
     left: 15%;
-    top: 0%;
+    top: 0;
     right: 15%;
     bottom: 0;
 }
@@ -30,10 +30,10 @@
 
 #CanvasContainer {
 	position: absolute;
-	left: 10%;
-	top: 10%;
-	right: 10%;
-	bottom: 10%;
+	left: 12%;
+	top: 0;
+	right: 12%;
+	bottom: 0;
 }
 
 #UsersCanvas {
