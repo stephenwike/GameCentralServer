@@ -51,7 +51,7 @@ function Animate()
 	// request new frame
 	setTimeout(function() {
         Animate();
-    }, 15);
+    }, 10);
 }
 
 // ANIMATION METHODS ===============================================================================================================
