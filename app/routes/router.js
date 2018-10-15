@@ -12,7 +12,7 @@ module.exports.SetupRouting = function (tv_app)
 		res.render('appviews/home/home');
 	});
 	tv_app.get('/config', function (req, res) {
-		res.render('appviews/config');
+		res.render('appviews/config/config');
 	});
 	tv_app.get('/catan', function(req, res) {
 		res.render('catan');

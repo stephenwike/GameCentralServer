@@ -19,6 +19,11 @@ tv_app.use(express.static('app'));
 tv_app.set('views', __dirname + '/app/views');
 require('./app/routes/router').SetupRouting(tv_app);
 
+// fake routes ==================================================================
+an_app.use(express.static('app'));
+an_app.set('views', __dirname + '/app/views');
+require('./app/routes/fakeRouter').SetupRouting(an_app);
+
 // listen (start app with node server.js) =======================================
 tv_server.listen(tv_app_port, () => {console.log("Listening on port " + tv_app_port);});
 an_server.listen(an_app_port, () => {console.log("Listening on port " + an_app_port);});
