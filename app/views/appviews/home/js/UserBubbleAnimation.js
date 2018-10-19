@@ -30,10 +30,10 @@ const CanvasWidth  = getCanvas().clientWidth;
 const CanvasHeight = getCanvas().clientHeight;
 
 // BOOT ===========================================================================================================================
-(function InitializeAnimation()
+function InitializeBubbleAnimation(data)
 {
-	Initialize();
-})();
+	Initialize(data);
+}
  
 function Animate()
 {
@@ -60,9 +60,7 @@ function ClearCanvas()
 	getContext().clearRect(0, 0, getCanvas().width, getCanvas().height);
 }
 
-
-setTimeout(function()
-{
-    Animate();
-}, 100);
-
+// request new frame
+setTimeout(function() {
+	Animate();
+}, 10);

@@ -1,6 +1,4 @@
 var Clusters = [];
-const MinClusters = 3; // Can have no users connected.
-const MaxClusters = 8; // Maximum number of connected users possible (or at least that can display.
 const ClusterMaxRadius = 80;
 const ClusterMinRadius = 65;
 const ClusterRotationSpeed = 0.001;
@@ -18,31 +16,30 @@ const AnimationMaxRadius = 40;
 const AnimationMinRadius = 20;
 const AnimationMimOffset = 20;
 const AnimationMaxThetaDelta = 0.01;
-//const AnimationXMaxRadius = 20; //TODO: Use these!
-//const AnimationXMinRadius = 5;
-//const AnimationYMaxRadius = 10;
-//const AnimationYMinRadius = 2;
-//const AnimationAnchor = 1.87;
 
-function Initialize()
+function Initialize(data)
 {
 	Resize();
-	MakeClusters();
+	MakeClusters(data);
 }
 
-function MakeClusters()
+function MakeClusters(data)
 {
-	var NumberOfClusters = RandomRange(MinClusters, MaxClusters); // TODO: This will actually be the number of users connected...
-	var RootClusterTheta = Math.random() * (2 * Math.PI) / NumberOfClusters;
-	for (var i = 0; i < NumberOfClusters; ++i)
+	// Parse connection data
+	usernames = Object.keys(data);
+	count = usernames.length;
+
+	Clusters = [];
+	var RootClusterTheta = Math.random() * (2 * Math.PI) / count;
+	for (var i = 0; i < count; ++i)
 	{
-		var theta = ((2 * Math.PI) * ((i) / NumberOfClusters)) + RootClusterTheta;
+		var theta = ((2 * Math.PI) * ((i) / count)) + RootClusterTheta;
 		var newCluster = {
 			X: ((CanvasWidth / 2) - ClusterMaxRadius) * Math.cos(theta) + (CanvasWidth / 2),
 			Y: ((CanvasHeight / 2) - ClusterMaxRadius) * Math.sin(theta) + (CanvasHeight / 2),
 			R: RandomRange(ClusterMinRadius, ClusterMaxRadius),
 			Theta: theta,
-			Name: "Player " + i,
+			Name: usernames[i],
 			Coins: []
 		}
 		newCluster.Coins = MakeCoins(newCluster);

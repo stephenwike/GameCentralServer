@@ -1,0 +1,5 @@
+function InitializeGame()
+{
+    InitializeAssets();
+    RenderBoard();
+}

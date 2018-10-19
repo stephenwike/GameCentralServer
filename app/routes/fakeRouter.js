@@ -1,17 +1,16 @@
-var exphbs = require('express-handlebars');
+var path = require('path');
 
 module.exports.SetupRouting = function (an_app)
 {
-	an_app.engine('handlebars', exphbs({
-		defaultLayout: 'main', 
-		layoutsDir: 'app/views/layouts'
-	}));
-	an_app.set('view engine', 'handlebars');
+	an_app.set('view engine', 'html');
 
 	// For fake client only
+	var newPath = path.join(__dirname, "../");
+	console.log(newPath);
+
+	var fullPath = path.join(newPath, 'views/appviews/fake/FakeClient.html');
+
 	an_app.get('/', function (req, res) {
-		res.render('appviews/fake/FakeClient');
+		res.sendFile(fullPath);
 	});
 }
-
-// routes =======================================================================

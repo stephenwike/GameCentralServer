@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="views/appviews/fake/css/FakeStyles.css">
+	</head>
+	<body>
+		<form>
+			username <input id="usernameInput" type="text" name="username">
+		</form>
+		<button onclick="AddUser()">Add User</button>
+		<button onclick="SendConfigJSON()">Send JSON</button>
+		<button onclick="LoadGame()">Load Game</button>
+		
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="views/appviews/fake/js/FakeSocketCommunications.js"></script>
+	</body>
+</html>

@@ -1,0 +1,37 @@
+#maincontent{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-image: url("../images/bkgd.png");
+    padding: 15px;
+}
+
+#gameboard{
+    position: relative;
+    top: 15px;
+    bottom: 15px;
+    width: 100%;
+    margin: auto;
+    overflow: hidden;
+}
+
+#shoreregion{
+    
+}
+
+#tileregion{
+
+}
+
+.Shores{
+    position: relative;
+    max-height: 100%;
+}
+
+.Tile{
+    position: absolute;
+    top: 0;
+    height: 200px;
+}

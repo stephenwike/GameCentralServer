@@ -15,8 +15,6 @@ module.exports.SetupRouting = function (tv_app)
 		res.render('appviews/config/config');
 	});
 	tv_app.get('/catan', function(req, res) {
-		res.render('catan');
+		res.render('gameviews/catan/catan');
 	});
 }
-
-// routes =======================================================================

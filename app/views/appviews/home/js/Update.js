@@ -13,22 +13,6 @@ function UpdateCluster(cluster)
 	cluster.Y = ((CanvasHeight / 2) - ClusterMaxRadius) * Math.sin(cluster.Theta) + (CanvasHeight / 2);
 	
 	UpdateCoins(cluster, cluster.Coins);
-	
-	
-	
-	
-	
-	
-	if(GridMode)
-	{
-		//RenderGrids();
-		//DrawClusterRadius(clust);
-		//DrawCenterCoinEnclosure(clust);
-	}
-	for (var i = 0; i < cluster.Coins.length; ++i)
-	{
-		//UpdateCoin(clust.Coins[i], clust.X, clust.Y, clust.R);
-	}
 }
 
 function UpdateCoins(cluster, coins)
@@ -46,7 +30,6 @@ function UpdateCoin(cluster, coin)
 	coin.AnimationY = coin.AnimationOffset * Math.sin(coin.AnimationTheta); 
 	
 	coin.Theta += coin.DeltaTheta;
-	//coin.Offset = offset;
 	coin.X = cluster.X + coin.AnimationX + (coin.Offset * Math.cos(coin.Theta));
 	coin.Y = cluster.Y + coin.AnimationY + (coin.Offset * Math.sin(coin.Theta));
 }
