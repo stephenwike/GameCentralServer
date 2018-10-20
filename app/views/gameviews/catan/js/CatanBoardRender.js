@@ -1,27 +1,47 @@
+var ContainerContent = {};
+
 function RenderBoard()
 {
     SizeGameBoard();
+    SizeCardPile();
     PlaceShores();
     PlaceTiles();
-    SetRobber();
+    PlacePorts();
+    PlaceRobber();
+    PlaceDevCards();
+    PlaceResCards();
+
+    // Todo:  Remove when done
+    SetCitySpaces();
+    SetRoadSpaces();
 }
 
 function SizeGameBoard()
 {
-    //var gb = document.getElementById("gameboard");
-    //console.log("Width: " + gb.clientWidth);
-    //console.log("Height: " + gb.clientHeight);
-    //gb.style.width = gb.clientHeight + 'px';
-    //gb.style.left = ((gb.clientWidth / 2) - (gb.clientHeight / 2)) + 'px';
-    //gb.style.right = ((gb.clientWidth / 2) - (gb.clientHeight / 2)) + 'px';
+    var gb = document.getElementById("gameboard");
+
+    // Set width based on gameboard ratio
+    var gbWidth = gb.clientHeight * (8 / (5 * Math.sqrt(3))); // Math based on hexagon board
+    gb.style.width = gbWidth + 'px';
+
+    // Set absolute left
+    ContainerContent.SideGap = ((window.innerWidth / 2) - (gb.clientHeight / 2)) + 'px';
+    gb.style.left = ContainerContent.SideGap;
+}
+
+function SizeCardPile()
+{
+    var cp = document.getElementById("cardpile");
+
+    // Set width based to side gap size
+    cp.style.width = ContainerContent.SideGap;
 }
 
 function PlaceShores()
 {
-	var loc = document.getElementById("shoreregion");
+	var loc = document.getElementById("pieces");
 	var img = document.createElement("IMG");
-	img.src = "views/gameviews/catan/images/shores.png";
-    img.classList.add("Shores");
-    //mg.setAttribute('style', 'position:relative; z-index:1; top: -72px; left: -69px;');
+    img.src = "views/gameviews/catan/images/shores.png";
+    img.setAttribute("style", "position:absolute;z-index:2;width:114%;height:114%;top:-7.2%;left:-7.6%;");
     loc.appendChild(img);
 }

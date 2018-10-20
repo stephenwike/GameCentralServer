@@ -1,4 +1,4 @@
-#maincontent{
+#catanbody{
     position: absolute;
     top: 0;
     bottom: 0;
@@ -9,29 +9,60 @@
 }
 
 #gameboard{
-    position: relative;
-    top: 15px;
-    bottom: 15px;
-    width: 100%;
-    margin: auto;
-    overflow: hidden;
-}
-
-#shoreregion{
-    
-}
-
-#tileregion{
-
-}
-
-.Shores{
-    position: relative;
-    max-height: 100%;
-}
-
-.Tile{
     position: absolute;
-    top: 0;
-    height: 200px;
+    top: 10%;
+    bottom: 15%;
+}
+
+#cardcontainer{
+    position: absolute;
+    top: 10%;
+    bottom: 10%;
+    right: 0%;
+}
+
+#cardpile{
+    position: relative;
+    height: 100%;
+}
+
+#cards{
+    position: relative;
+    margin-left: 20%;
+    height: 20%;
+}
+
+.tile{
+    position: absolute;
+    z-index: 2;
+    width: 25%;
+    height: 20%;
+}
+
+.port{
+    position: absolute;
+    z-index: 4;
+    width: 12%;
+    height: 12%;
+}
+
+.card{
+    position: absolute;
+    display: block;
+    left: 30%;
+    z-index: 5px;
+    padding-top: 5%;
+    height: 12%;
+}
+
+.city{
+    position: absolute;
+    z-index: 6px;
+    height: 4%;
+}
+
+.road{
+    position: absolute;
+    z-index: 5px;
+    height: 1.5%;
 }
