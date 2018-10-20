@@ -76,8 +76,12 @@ function SetupSockets(tv_io, an_io)
 		
 		// Config Tracking ===============================================================================
 		socket.on('loadconfig', (args) => {
+			//socket.broadcast();
 			gameConfigService.SetGameConfig(args);
 			tv_io.emit('loadconfig'); // Can't send arguements because page redirect will lose json
+		});
+		socket.on('updateconfig', (args) => {
+			gameConfigService.SetGameConfig(args);
 		});
 
 		// Forward all events to tv ======================================================================

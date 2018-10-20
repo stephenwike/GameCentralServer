@@ -5,6 +5,7 @@ var socket = io.connect();
 socket.on('connect', function(data) { ConnectionEntry(data); });
 socket.on('updateconnectionslist', function(data) { UpdateConnectionsList(data); });
 socket.on('loadconfig', function(data) { LoadConfig(data); });
+socket.on('updateconfig', function(data) { UpdateConfig(data); });
 socket.on('configresult', function(data) { LoadConfigResult(data); });
 socket.on('loadgame', function(data) { LoadGame(data); });
 
@@ -41,6 +42,12 @@ function LoadConfig(data)
 {
     console.log("loading Config");
 	document.location = RootLocation + "config";
+}
+
+function UpdateConfig(data)
+{
+    console.log("updating Config");
+	document.location = RootLocation;
 }
 
 function LoadConfigResult(data)
