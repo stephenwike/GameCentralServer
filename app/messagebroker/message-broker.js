@@ -88,6 +88,7 @@ function SetupSockets(tv_io, an_io)
 		// Game Management ===============================================================================
 		socket.on('loadgame', (args) => {
 			// Persist game configuration and initialize game data.
+			an_io.emit('startgame', args);
 		});
 
 		// Forward all events to tv ======================================================================
