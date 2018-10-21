@@ -31,11 +31,12 @@ function SetupSockets(tv_io, an_io)
 			socket.emit('configresult', gameConfig);
 		});
 
+		// Forward all events to app =====================================================================
 		socket.on('*', (evt, data) =>
 		{
 			console.log("EVENT " + evt + ", DATA: "); 
 			console.log(data);
-			if (data["id"] == "*") 
+			if (data["id"] == "*")
 			{
 				an_io.emit(evt, data);
 			}
@@ -76,12 +77,17 @@ function SetupSockets(tv_io, an_io)
 		
 		// Config Tracking ===============================================================================
 		socket.on('loadconfig', (args) => {
-			//socket.broadcast();
+			socket.broadcast.emit('configholding', args);
 			gameConfigService.SetGameConfig(args);
 			tv_io.emit('loadconfig'); // Can't send arguements because page redirect will lose json
 		});
 		socket.on('updateconfig', (args) => {
 			gameConfigService.SetGameConfig(args);
+		});
+
+		// Game Management ===============================================================================
+		socket.on('loadgame', (args) => {
+			// Persist game configuration and initialize game data.
 		});
 
 		// Forward all events to tv ======================================================================

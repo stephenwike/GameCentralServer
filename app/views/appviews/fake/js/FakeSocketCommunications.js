@@ -1,4 +1,15 @@
 var socket = io.connect();
+socket.on("configholding", function (args) { HoldingFunction(args); });
+
+function HoldingFunction(args)
+{
+	console.log(args);
+	var bod = document.body;
+	var par = document.createElement('h1');
+	var txt = document.createTextNode('THIS APPLICATION IS IN CONFIG HOLDING');
+	par.appendChild(txt);
+	bod.appendChild(par);
+}
 			
 function AddUser()
 {
