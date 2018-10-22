@@ -1,19 +1,26 @@
 var ContainerContent = {};
 
-function RenderBoard()
+function RenderBoard(data)
 {
+    console.log("ALL DATA");
+    console.log(data);
+    // Size html containers
     SizeGameBoard();
     SizeCardPile();
-    PlaceShores();
-    PlaceTiles();
-    PlacePorts();
-    PlaceRobber();
-    PlaceDevCards();
-    PlaceResCards();
+
+    // place static game pieces
+    //PlaceShores(); // Shore are static and don't really need to be initialized
+    PlaceTiles(data.Game.Tiles);
+    PlacePorts(data.Game.Ports);
+
+    // place dynamic game peices
+    //PlaceRobber();
+    //PlaceDevCards();
+    //PlaceResCards();
 
     // Todo:  Remove when done
-    SetCitySpaces();
-    SetRoadSpaces();
+    //SetCitySpaces();
+    //SetRoadSpaces();
 }
 
 function SizeGameBoard()
@@ -37,11 +44,11 @@ function SizeCardPile()
     cp.style.width = ContainerContent.SideGap;
 }
 
-function PlaceShores()
-{
-	var loc = document.getElementById("pieces");
-	var img = document.createElement("IMG");
-    img.src = "views/gameviews/catan/images/shores.png";
-    img.setAttribute("style", "position:absolute;z-index:2;width:114%;height:114%;top:-7.2%;left:-7.6%;");
-    loc.appendChild(img);
-}
+//function PlaceShores()
+//{
+//	var loc = document.getElementById("pieces");
+//	var img = document.createElement("IMG");
+//    img.src = "views/gameviews/catan/images/shores.png";
+//    img.setAttribute("style", "position:absolute;z-index:2;width:114%;height:114%;top:-7.2%;left:-7.6%;");
+//    loc.appendChild(img);
+//}

@@ -31,10 +31,16 @@ function SetupSockets(tv_io, an_io)
 			socket.emit('configresult', gameConfig);
 		});
 
+		// Game Management ===============================================================================
+		socket.on('getgamedata', (args) => {
+			var gameData = gameConfigService.GetGameData();
+			socket.emit('gamedataresult', gameData);
+		});
+
 		// Forward all events to app =====================================================================
 		socket.on('*', (evt, data) =>
 		{
-			console.log("EVENT " + evt + ", DATA: "); 
+			console.log("TV EVENT " + evt + ", DATA: "); 
 			console.log(data);
 			if (data["id"] == "*")
 			{
@@ -79,7 +85,7 @@ function SetupSockets(tv_io, an_io)
 		socket.on('loadconfig', (args) => {
 			socket.broadcast.emit('configholding', args);
 			gameConfigService.SetGameConfig(args);
-			tv_io.emit('loadconfig'); // Can't send arguements because page redirect will lose json
+			tv_io.emit('loadconfig'); // Can't send arguments because page redirect will lose json
 		});
 		socket.on('updateconfig', (args) => {
 			gameConfigService.SetGameConfig(args);
@@ -88,6 +94,8 @@ function SetupSockets(tv_io, an_io)
 		// Game Management ===============================================================================
 		socket.on('loadgame', (args) => {
 			// Persist game configuration and initialize game data.
+			gameConfigService.SetupGame(args);
+			tv_io.emit('startgame', args);
 			an_io.emit('startgame', args);
 		});
 
@@ -103,7 +111,7 @@ function SetupSockets(tv_io, an_io)
 		
 		socket.on('*', (evt, data) =>
 		{
-			console.log("EVENT " + evt + ", DATA: "); 
+			console.log("APP EVENT " + evt + ", DATA: "); 
 			console.log(data);
 			tv_io.emit(evt, data);
 		});

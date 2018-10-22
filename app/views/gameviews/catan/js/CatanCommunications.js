@@ -1,4 +1,9 @@
-function ConnectionEntry()
+function ConnectionEntry(data)
 {
-    InitializeGame();
+    GetGameData(data);
+}
+
+function EnterGameData(data)
+{
+    InitializeGame(data);
 }

@@ -2,12 +2,13 @@ var RootLocation = document.location;
 var connections = 0;
 	
 var socket = io.connect();
-socket.on('connect', function(data) { ConnectionEntry(data); });
+socket.on('connect', function(data) { ConnectionEntry(data); }); // Direct call to route
 socket.on('updateconnectionslist', function(data) { UpdateConnectionsList(data); });
 socket.on('loadconfig', function(data) { LoadConfig(data); });
 socket.on('updateconfig', function(data) { UpdateConfig(data); });
 socket.on('configresult', function(data) { LoadConfigResult(data); });
-socket.on('loadgame', function(data) { LoadGame(data); });
+socket.on('startgame', function(data) { StartGame(data); });
+socket.on('gamedataresult', function(data) { EnterGameData(data); }); // Direct call to route
 
 function GetConnectionsList(data)
 {
@@ -58,7 +59,12 @@ function LoadConfigResult(data)
     PopulateConfig(data)
 }
 
-function LoadGame(data)
+function StartGame(data)
 {
 	document.location = data.gameName;
+}
+
+function GetGameData(data)
+{
+    socket.emit('getgamedata', {"id": socket.id});
 }
