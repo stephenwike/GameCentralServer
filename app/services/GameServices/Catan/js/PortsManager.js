@@ -1,5 +1,10 @@
 var Ports = {};
-Ports.types = ["ore","wheat","lumber","brick","sheep","general","general","general","general"];
+
+function InitPorts()
+{
+    Ports = {};
+    Ports.types = ["ore","wheat","lumber","brick","sheep","general","general","general","general"];
+}
 
 function ShufflePorts()
 {
@@ -10,12 +15,19 @@ function ShufflePorts()
         Ports.types.splice(rand,1);
     }
     Ports.types = porttemp;
-    return Ports;
 }
 
 module.exports = {
+    Init: function()
+    {
+        InitPorts();
+    },
     Shuffle: function()
     {
-        return ShufflePorts();
+        ShufflePorts();
+    },
+    GetPorts: function()
+    {
+        return Ports;
     }
 }

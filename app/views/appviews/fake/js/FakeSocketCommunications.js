@@ -25,7 +25,7 @@ function SendConfigJSON()
 	args.Game = 'Catan';
 
 	var configOption1 = {};
-	configOption1.Title = "Option 1 Title";
+	configOption1.Title = "Number Of Players";
 	configOption1.Description = "Description of config option 1 here. This should make it look like there is a much more in-depth description of what this configuration option is actuall trying to accomplish.";
 	configOption1.SelectionType = "Dropdown";
 	configOption1.Options = [ "1", "2", "3", "4" ];
@@ -60,5 +60,5 @@ function SendConfigJSON()
 
 function LoadGame(data)
 {
-	socket.emit('loadgame', { "gameName" : "catan" });
+	socket.emit('loadgame', { "gameName" : "Catan" });
 }

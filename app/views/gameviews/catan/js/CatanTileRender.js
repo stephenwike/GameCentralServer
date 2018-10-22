@@ -19,3 +19,21 @@ function PlaceTiles(tiles)
     }
     loc.appendChild(div);
 }
+
+function PlaceRobber(tiles)
+{
+    // create and set image
+    var div = document.createElement("DIV");
+    div.id = "robberdiv";
+
+    var img = document.createElement("IMG");
+    img.src = "views/gameviews/catan/images/robber.png";
+    img.classList.add("robber");
+    var top = TilePos.y[tiles.robber];
+    var left = TilePos.x[tiles.robber];
+	img.setAttribute("style", "z-index:3; top:"+top+"%; left:"+left+"%;");
+	div.appendChild(img);
+
+    var loc = document.getElementById("pieces");
+    loc.appendChild(div);	
+}

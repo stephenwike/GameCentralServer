@@ -1,7 +1,12 @@
 var Tiles = {}
-Tiles.types = ["desert","forest1","forest2","forest3","forest4","mountain1","mountain2","mountain3","pasture1","pasture2","pasture3","pasture4","field1","field2","field3","field4","hill1","hill2","hill3"];
-Tiles.number = [2,3,3,4,4,5,5,6,6,8,8,9,9,10,10,11,11,12];
-Tiles.robber = [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false];
+
+function InitTiles()
+{
+    Tiles = {};
+    Tiles.types = ["desert","forest1","forest2","forest3","forest4","mountain1","mountain2","mountain3","pasture1","pasture2","pasture3","pasture4","field1","field2","field3","field4","hill1","hill2","hill3"];
+    Tiles.number = [2,3,3,4,4,5,5,6,6,8,8,9,9,10,10,11,11,12];
+    Tiles.robber = 0;
+}
 
 function ShuffleTilesAndNumbers()
 {
@@ -24,12 +29,37 @@ function ShuffleTilesAndNumbers()
         Tiles.number.splice(rand,1);
     }
     Tiles.number = numbtemp;
-    return Tiles;
+}
+
+function GetRobberIndex()
+{
+    for (var i = 0; Tiles.types.length; ++i)
+    {
+        if(Tiles.types[i] === "desert")
+        {
+            console.log("robber index found");
+            Tiles.robber = i;
+            Tiles.number.splice(i, 0, 0);
+            break;
+        }
+    }
 }
 
 module.exports = {
+    Init: function()
+    {
+        InitTiles();
+    },
     Shuffle: function()
     {
-        return ShuffleTilesAndNumbers();
+        ShuffleTilesAndNumbers();
+    },
+    SetRobber: function()
+    {
+        GetRobberIndex();
+    },
+    GetTiles: function()
+    {
+        return Tiles;
     }
 }

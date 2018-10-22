@@ -13,8 +13,6 @@ module.exports = {
     },
     SetupGame: function(args)
     {
-        console.log(args);
-
         var data;
         switch(args["gameName"])
         {

@@ -5,10 +5,23 @@ var Ports = require('./js/PortsManager');
 module.exports = {
     InitializeGame: function()
     {
+        // Init Assets
+        Tiles.Init();
+        Cards.Init();
+        Ports.Init();
+
         // Shuffle Assets
-        var tiles = Tiles.Shuffle();
-        var cards = Cards.Shuffle();
-        var ports = Ports.Shuffle();
+        Tiles.Shuffle();
+        Cards.Shuffle();
+        Ports.Shuffle();
+
+        // Place Robber
+        Tiles.SetRobber();
+
+        // Get data
+        var tiles = Tiles.GetTiles();
+        var cards = Cards.GetCards();
+        var ports = Ports.GetPorts();
 
         // Create and return setup data
         var data = {

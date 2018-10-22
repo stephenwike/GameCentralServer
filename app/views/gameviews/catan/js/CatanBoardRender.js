@@ -4,6 +4,7 @@ function RenderBoard(data)
 {
     console.log("ALL DATA");
     console.log(data);
+
     // Size html containers
     SizeGameBoard();
     SizeCardPile();
@@ -14,7 +15,7 @@ function RenderBoard(data)
     PlacePorts(data.Game.Ports);
 
     // place dynamic game peices
-    //PlaceRobber();
+    PlaceRobber(data.Game.Tiles);
     //PlaceDevCards();
     //PlaceResCards();
 
