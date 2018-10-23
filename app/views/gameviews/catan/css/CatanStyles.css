@@ -21,9 +21,12 @@
     right: 0%;
 }
 
-#cardpile{
-    position: relative;
-    height: 100%;
+#devCards{
+    position: absolute;
+    height: 50%;
+    top: 0;
+    left: 0;
+    background-color: rgba(73, 62, 224, 0.5);
 }
 
 #cards{

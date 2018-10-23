@@ -14,7 +14,6 @@ function RenderBoard(data)
     PlacePorts(data.Game.Ports);
 
     // place dynamic game peices
-    //PlaceRobber();
     //PlaceDevCards();
     //PlaceResCards();
 
@@ -38,7 +37,7 @@ function SizeGameBoard()
 
 function SizeCardPile()
 {
-    var cp = document.getElementById("cardpile");
+    var cp = document.getElementById("cardcontainer");
 
     // Set width based to side gap size
     cp.style.width = ContainerContent.SideGap;
