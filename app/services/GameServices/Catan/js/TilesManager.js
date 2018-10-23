@@ -37,7 +37,6 @@ function GetRobberIndex()
     {
         if(Tiles.types[i] === "desert")
         {
-            console.log("robber index found");
             Tiles.robber = i;
             Tiles.number.splice(i, 0, 0);
             break;

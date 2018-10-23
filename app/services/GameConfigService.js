@@ -14,7 +14,7 @@ module.exports = {
     SetupGame: function(args)
     {
         var data;
-        switch(args["gameName"])
+        switch(args["gameName"]) 
         {
             case "Catan":
                 data = require('./GameServices/Catan/CatanService').InitializeGame();

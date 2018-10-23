@@ -33,7 +33,7 @@ function ShuffleDevCards()
 module.exports = {
     Init: function()
     {
-        InitCards();
+        InitCards(); 
     },
     Shuffle: function()
     {

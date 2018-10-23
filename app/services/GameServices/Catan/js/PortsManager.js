@@ -6,7 +6,7 @@ function InitPorts()
     Ports.types = ["ore","wheat","lumber","brick","sheep","general","general","general","general"];
 }
 
-function ShufflePorts()
+function ShufflePorts() 
 {
     var porttemp = [];
     for(var i = 0; i < Ports.types.length;){

@@ -16,7 +16,7 @@ module.exports = {
         Ports.Shuffle();
 
         // Place Robber
-        Tiles.SetRobber();
+        Tiles.SetRobber(); 
 
         // Get data
         var tiles = Tiles.GetTiles();
