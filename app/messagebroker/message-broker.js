@@ -1,6 +1,7 @@
 
 var playersService = require('./../services/ConnectionTrackingService');
 var gameConfigService = require('./../services/GameConfigService');
+var commRulesService = require('./../services/CommunicationRulesService');
 
 function SetupSockets(tv_io, an_io)
 {
@@ -8,17 +9,9 @@ function SetupSockets(tv_io, an_io)
 	{	
 		// Track connections/disconnections ==============================================================
 		console.log("TV connected, id: " + socket.id);
-		socket.on('disconnect', (args) => {console.log("TV disconnected, id: " + socket.id);});
-		
-		// Forward all events to android(s) ==============================================================
-		var onevent = socket.onevent;
-		socket.onevent = function (packet) 
-		{
-			var args = packet.data || [];
-			onevent.call (this, packet);    // original call
-			packet.data = ["*"].concat(args);
-			onevent.call(this, packet);     // additional call to catch-all
-		};
+		socket.on('disconnect', (args) => {
+			console.log("TV disconnected, id: " + socket.id);
+		});
 
 		// Player Tracking ===============================================================================
 		socket.on('getconnectionslist', (args) => {
@@ -37,7 +30,16 @@ function SetupSockets(tv_io, an_io)
 			socket.emit('gamedataresult', gameData);
 		});
 
-		// Forward all events to app =====================================================================
+		// Forward all events to android(s) ==============================================================
+		var onevent = socket.onevent;
+		socket.onevent = function (packet) 
+		{
+			var args = packet.data || [];
+			onevent.call (this, packet);    // original call
+			packet.data = ["*"].concat(args);
+			onevent.call(this, packet);     // additional call to catch-all
+		};		
+
 		socket.on('*', (evt, data) =>
 		{
 			console.log("TV EVENT " + evt + ", DATA: "); 
@@ -63,7 +65,6 @@ function SetupSockets(tv_io, an_io)
 			var args = {"isRemoved": success};
 			socket.emit('playerremovedresults', args);
 			tv_io.emit('updateconnectionslist', playersService.PlayerList);
-			console.log(playersService.PlayerCount());
 		});
 
 		// Player Tracking ===============================================================================
@@ -71,32 +72,41 @@ function SetupSockets(tv_io, an_io)
 			var success = playersService.AddPlayer(args.username, socket.id);
 			socket.emit('playeraddedresult', success);
 			tv_io.emit('updateconnectionslist', playersService.PlayerList);
-			console.log(playersService.PlayerCount());
 		});
 		socket.on('removeplayer', (args) => {
 			var success = playersService.RemovePlayer(socket.id);
 			var args = {"isRemoved": success};
 			socket.emit('playerremoved', args);
 			tv_io.emit('updateconnectionslist', playersService.PlayerList);
-			console.log(playersService.PlayerCount());
 		});
 		
 		// Config Tracking ===============================================================================
 		socket.on('loadconfig', (args) => {
-			socket.broadcast.emit('configholding', args);
-			gameConfigService.SetGameConfig(args);
-			tv_io.emit('loadconfig'); // Can't send arguments because page redirect will lose json
+			if (commRulesService.CanCommunicate(args.id))
+			{
+				commRulesService.LimitCommunicationsTo(args.id);
+				socket.broadcast.emit('configholding', args);
+				gameConfigService.SetGameConfig(args);
+				tv_io.emit('loadconfig'); // Can't send arguments because page redirect will lose json
+			}
 		});
 		socket.on('updateconfig', (args) => {
-			gameConfigService.SetGameConfig(args);
+			if (commRulesService.CanCommunicate(args.id))
+			{
+				gameConfigService.SetGameConfig(args);
+			}
 		});
 
 		// Game Management ===============================================================================
 		socket.on('loadgame', (args) => {
 			// Persist game configuration and initialize game data.
-			gameConfigService.SetupGame(args);
-			tv_io.emit('startgame', args);
-			an_io.emit('startgame', args);
+			if (commRulesService.CanCommunicate(args.id))
+			{
+				var players = playersService.PlayerList;
+				gameConfigService.SetupGame(args, players);
+				tv_io.emit('startgame', args);
+				an_io.emit('startgame', args);
+			}
 		});
 
 		// Forward all events to tv ======================================================================
@@ -111,9 +121,12 @@ function SetupSockets(tv_io, an_io)
 		
 		socket.on('*', (evt, data) =>
 		{
-			console.log("APP EVENT " + evt + ", DATA: "); 
-			console.log(data);
-			tv_io.emit(evt, data);
+			if (commRulesService.CanCommunicate(data.id))
+			{
+				console.log("APP EVENT " + evt + ", DATA: "); 
+				console.log(data);
+				tv_io.emit(evt, data);
+			}
 		});
 	});
 }

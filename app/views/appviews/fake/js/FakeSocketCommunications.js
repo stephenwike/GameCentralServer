@@ -21,7 +21,7 @@ function AddUser()
 function SendConfigJSON()
 {
 	var args = {};
-	args.id = 'fakeId';
+	args.id = socket.id;
 	args.Game = 'Catan';
 
 	var configOption1 = {};
@@ -60,5 +60,5 @@ function SendConfigJSON()
 
 function LoadGame(data)
 {
-	socket.emit('loadgame', { "gameName" : "Catan" });
+	socket.emit('loadgame', { "id": socket.id, "gameName" : "Catan" });
 }

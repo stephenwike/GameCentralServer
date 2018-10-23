@@ -7,7 +7,7 @@ module.exports = {
 		// Is the username long enough
 		if (username.length < 4)
 		{
-			return { "isAdded": false, "Reason": "Username to short." };
+			return { "isAdded": false, "Reason": "Username too short." };
 		}
 
 		// Is this socket already registered?

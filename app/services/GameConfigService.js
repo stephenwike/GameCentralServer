@@ -11,13 +11,13 @@ module.exports = {
     {
         return gameConfig;
     },
-    SetupGame: function(args)
+    SetupGame: function(args, players)
     {
         var data;
         switch(args["gameName"]) 
         {
             case "Catan":
-                data = require('./GameServices/Catan/CatanService').InitializeGame();
+                data = require('./GameServices/Catan/CatanService').InitializeGame(gameConfig, players);
                 break;
         }
 

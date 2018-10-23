@@ -1,10 +1,15 @@
+var Players = require('./js/PlayersManager');
 var Tiles = require('./js/TilesManager');
 var Cards = require('./js/CardsManager');
 var Ports = require('./js/PortsManager');
 
 module.exports = {
-    InitializeGame: function()
+    InitializeGame: function(config, players)
     {
+        // Setup Players
+        var cOpt = config.config[0];
+        Players.Init(cOpt.Options[cOpt.Selected], players);
+
         // Init Assets
         Tiles.Init();
         Cards.Init();
