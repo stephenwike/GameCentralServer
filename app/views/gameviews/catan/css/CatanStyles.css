@@ -8,31 +8,118 @@
     padding: 15px;
 }
 
+#playerroster{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 70%;
+    background-color: rgba(190, 190, 8, 0.2);
+}
+
 #gameboard{
     position: absolute;
-    top: 10%;
-    bottom: 15%;
+    top: 0;
+    bottom: 0;
+    left: 30%;
+    right: 30%;
+    background-color: rgba(255, 190, 255, 0.2);
+}
+
+#gameboardpadding{
+    position: relative;
+    width: 90%;
+    background-color: red;
 }
 
 #cardcontainer{
     position: absolute;
-    top: 10%;
-    bottom: 10%;
+    top: 0%;
+    bottom: 0%;
+    left: 70%;
     right: 0%;
+    background-color:  rgba(255, 255, 255, 0.5);;
 }
 
-#devCards{
+#cardcontainerpadding{
     position: absolute;
-    height: 50%;
+    left: 15%;
+    right: 15%;
+    top: 15%;
+    bottom: 15%;
+    background-color: rgba(7, 5, 120, 0.2);
+}
+
+#longestroad{
+    position: absolute;
+    height: 40%;
+    width: 47.5%;
     top: 0;
+    left: 0;
+    background-color: rgba(45, 255, 185, 0.5);
+}
+
+#largestarmy{
+    position: absolute;
+    height: 40%;
+    width: 47.5%;
+    top: 0;
+    right: 0;
+    background-color: rgba(206, 37, 84, 0.5);
+}
+
+#devcards{
+    position: absolute;
+    height: 25%;
+    width: 30%;
+    top: 45%;
     left: 0;
     background-color: rgba(73, 62, 224, 0.5);
 }
 
-#cards{
-    position: relative;
-    margin-left: 20%;
-    height: 20%;
+#lumbercards{
+    position: absolute;
+    height: 25%;
+    width: 30%;
+    top: 45%;
+    left: 35%;
+    background-color: rgba(90, 250, 255, 0.5);
+}
+
+#brickcards{
+    position: absolute;
+    height: 25%;
+    width: 30%;
+    top: 45%;
+    left: 70%;
+    background-color: rgba(90, 250, 255, 0.5);
+}
+
+#wheatcards{
+    position: absolute;
+    height: 25%;
+    width: 30%;
+    top: 75%;
+    left: 0;
+    background-color: rgba(90, 250, 255, 0.5);
+}
+
+#sheepcards{
+    position: absolute;
+    height: 25%;
+    width: 30%;
+    top: 75%;
+    left: 35%;
+    background-color: rgba(255, 18, 112, 0.5);
+}
+
+#orecards{
+    position: absolute;
+    height: 25%;
+    width: 30%;
+    top: 75%;
+    left: 70%;
+    background-color: rgba(255, 18, 112, 0.5);
 }
 
 .tile{
@@ -59,10 +146,9 @@
 .card{
     position: absolute;
     display: block;
-    left: 30%;
     z-index: 5px;
-    padding-top: 5%;
-    height: 12%;
+    height: 100%;
+    margin: auto;
 }
 
 .city{

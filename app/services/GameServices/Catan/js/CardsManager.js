@@ -21,7 +21,7 @@ function InitCards()
 function ShuffleDevCards()
 {
     var cardsTemp = [];
-    for (var i = 0; i < Cards.Dev.types.length; ++i)
+    for (var i = 0; i < Cards.Dev.types.length;)
     {
         var rand = Math.floor(Math.random()*Cards.Dev.types.length);
         cardsTemp.push(Cards.Dev.types[rand]);

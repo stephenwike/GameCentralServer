@@ -6,8 +6,12 @@ function RenderBoard(data)
     console.log(data);
 
     // Size html containers
+
+    //SizeCardPile();
+    //SizePlayerRoster();
+    
     SizeGameBoard();
-    SizeCardPile();
+    
 
     // place static game pieces
     //PlaceShores(); // Shore are static and don't really need to be initialized
@@ -15,12 +19,9 @@ function RenderBoard(data)
     PlacePorts(data.Game.Ports);
 
     // place dynamic game peices
-<<<<<<< HEAD
     PlaceRobber(data.Game.Tiles);
-=======
->>>>>>> 873b4f8a53a6fa8decf9a9764b02445455261d18
-    //PlaceDevCards();
-    //PlaceResCards();
+    PlaceDevCards(data.Game.Cards.Dev);
+    PlaceResCards(data.Game.Cards.Res);
 
     // Todo:  Remove when done
     //SetCitySpaces();
@@ -30,14 +31,27 @@ function RenderBoard(data)
 function SizeGameBoard()
 {
     var gb = document.getElementById("gameboard");
+    var gbp = document.getElementById("gameboardpadding");
 
     // Set width based on gameboard ratio
-    var gbWidth = gb.clientHeight * (8 / (5 * Math.sqrt(3))); // Math based on hexagon board
-    gb.style.width = gbWidth + 'px';
+    
+    var gbpHeight = gbp.clientWidth / (8 / (5 * Math.sqrt(3))); // Math based on hexagon board
+    gbp.style.height = gbpHeight + 'px';
+    
+    // Set margins based on width percent
 
+    var marginsides = (gb.clientWidth - gbp.clientWidth) / 2;
+    var marginvertical = (gb.clientHeight - gbp.clientHeight) / 2; 
+    //console.log("margin: " + margin);
+    //var margin = (widthperc / 2) + '%';
+    //console.log(margin);
+    gbp.style.marginLeft = marginsides + 'px';
+    gbp.style.marginRight = marginsides + 'px';
+    gbp.style.marginTop = marginvertical + 'px';
+    gbp.style.marginBottom = marginvertical + 'px';
     // Set absolute left
-    ContainerContent.SideGap = ((window.innerWidth / 2) - (gb.clientHeight / 2)) + 'px';
-    gb.style.left = ContainerContent.SideGap;
+    //ContainerContent.SideGap = ((window.innerWidth / 2) - (gb.clientHeight / 2)) + 'px';
+    //gb.style.left = ContainerContent.SideGap;
 }
 
 function SizeCardPile()
@@ -46,6 +60,14 @@ function SizeCardPile()
 
     // Set width based to side gap size
     cp.style.width = ContainerContent.SideGap;
+}
+
+function SizePlayerRoster()
+{
+    var pr = document.getElementById("cardcontainer");
+
+    // Set width based to side gap size
+    pr.style.width = ContainerContent.SideGap;
 }
 
 //function PlaceShores()
