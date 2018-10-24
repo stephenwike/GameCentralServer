@@ -4,11 +4,14 @@ var Cards = require('./js/CardsManager');
 var Ports = require('./js/PortsManager');
 
 module.exports = {
-    InitializeGame: function(config, players)
+    InitializeGame: function(config, connections)
     {
         // Setup Players
         var cOpt = config.config[0];
-        Players.Init(cOpt.Options[cOpt.Selected], players);
+        Players.Init(cOpt.Options[cOpt.Selected], connections);
+
+        // Set Current Player
+        Players.GetNextPlayer();
 
         // Init Assets
         Tiles.Init();
@@ -24,12 +27,14 @@ module.exports = {
         Tiles.SetRobber(); 
 
         // Get data
+        var players = Players.GetPlayers();
         var tiles = Tiles.GetTiles();
         var cards = Cards.GetCards();
         var ports = Ports.GetPorts();
 
         // Create and return setup data
         var data = {
+            "Players": players,
             "Tiles": tiles,
             "Cards": cards,
             "Ports": ports

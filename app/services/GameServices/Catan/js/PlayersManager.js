@@ -1,14 +1,23 @@
 var Players = {};
+Players.Data = [];
+Players.CustomInitOrder = [];
+Players.TurnOrder = [];
+Players.ActiveUsername;
 
 module.exports = {
     Init: function(number, players)
     {
+        // Reset data
+        Players.Data = [];
+        Players.CustomInitOrder = [];
+        Players.TurnOrder = [];
+        Players.ActiveUsername;
+
         // Return if number specified doesn't match the player list.
         var playerKeys = Object.keys(players);
         if (number != playerKeys.length) return;
 
         // Convert player object to player array
-        Players.Data = [];
         for (var i = 0; i < playerKeys.length; ++i)
         {
             Players.Data.push(players[playerKeys[i]]);
@@ -22,10 +31,8 @@ module.exports = {
             Players.Data.splice(rand,1);
         }
         Players.Data = tempPlayers;
-        console.log(Players.Data);
 
         // Assign custom game setup order
-        Players.CustomInitOrder = [];
         // First round forward
         for (var i = 0; i < number; ++i)
         {
@@ -38,7 +45,6 @@ module.exports = {
         }
 
         // Assign turn order
-        Players.TurnOrder = [];
         for (var i = 0; i < number; ++i)
         {
             Players.TurnOrder.push(Players.Data[i]);
@@ -46,11 +52,13 @@ module.exports = {
     },
     GetNextPlayer: function()
     {
-        if(Players.CustomInitOrder.Length > 0)
+        if(Players.CustomInitOrder.length > 0)
         {
             console.log("INIT NEXT PLAYER:");
             console.log(Players.CustomInitOrder.splice(0,1));
-            return Players.CustomInitOrder.splice(0,1);
+            var player = Players.CustomInitOrder.splice(0,1);
+            Players.ActiveUsername = player[0].username;
+            return Players.ActiveUsername;
         }
         else
         {
@@ -58,7 +66,8 @@ module.exports = {
             var playertoback = Players.TurnOrder.splice(0,1);
             console.log(playertoback);
             Players.TurnOrder.push(playertoback);
-            return playertoback;
+            Players.ActiveUsername = playertoback[0].username;
+            return Players.ActiveUsername;
         }
     },
     GetPlayers: function()

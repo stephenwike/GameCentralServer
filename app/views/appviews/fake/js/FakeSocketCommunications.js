@@ -62,3 +62,8 @@ function LoadGame(data)
 {
 	socket.emit('loadgame', { "id": socket.id, "gameName" : "Catan" });
 }
+
+function AddSettlement(data)
+{
+	socket.emit('updategame', { "id": socket.id });
+}

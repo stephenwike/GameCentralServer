@@ -60,11 +60,12 @@ function SetupSockets(tv_io, an_io)
 		// Track connections/disconnections ==============================================================
 		console.log("App connected, id: " + socket.id);
 		socket.on('disconnect', (args) => {
-			console.log("App disconnected, id: " + socket.id);
+			commRulesService.CheckDisconnectedPlayer(socket.id);
 			var success = playersService.RemovePlayer(socket.id);
 			var args = {"isRemoved": success};
 			socket.emit('playerremovedresults', args);
 			tv_io.emit('updateconnectionslist', playersService.PlayerList);
+			console.log("App disconnected, id: " + socket.id);
 		});
 
 		// Player Tracking ===============================================================================
@@ -74,6 +75,7 @@ function SetupSockets(tv_io, an_io)
 			tv_io.emit('updateconnectionslist', playersService.PlayerList);
 		});
 		socket.on('removeplayer', (args) => {
+			commRulesService.CheckDisconnectedPlayer(socket.id);
 			var success = playersService.RemovePlayer(socket.id);
 			var args = {"isRemoved": success};
 			socket.emit('playerremoved', args);
@@ -104,8 +106,9 @@ function SetupSockets(tv_io, an_io)
 			{
 				var players = playersService.PlayerList;
 				gameConfigService.SetupGame(args, players);
+				var gameArgs = gameConfigService.GetGameData();
 				tv_io.emit('startgame', args);
-				an_io.emit('startgame', args);
+				an_io.emit('startgame', gameArgs);
 			}
 		});
 
