@@ -1,10 +1,27 @@
+var socket = io.connect();
+socket.on('connect', function(data) { ConnectionEntry(data); });
+socket.on('updategameconfig', function(data) { PopulateConfig(data); });
+socket.on('routegame', function(data) { console.log(data); document.location = data.gameName; } );
+
 function ConnectionEntry(data)
 {
-    GetGameConfig(data);
+	socket.emit('getgameconfig', {"id": socket.id});
+	console.log("Connection Entry called...");
 }
 
 function PopulateConfig(data)
 {
+	// Validate Data
+	var ValidateMessage = "";
+	if (data == undefined) ValidateMessage = "Data undefined";
+	else if (data.Game == undefined) ValidateMessage = "Data.Game undefined";
+	else if (data.config == undefined) ValidateMessage = "Data.config undefined";
+	if (ValidateMessage !== "")
+	{
+		console.log(ValidateMessage);
+		return;
+	}
+
     // Load Game Name
 	var ConfigGameName = document.getElementById('ConfigGameName');
 	if (typeof(ConfigGameName) != 'undefined' && ConfigGameName != null)

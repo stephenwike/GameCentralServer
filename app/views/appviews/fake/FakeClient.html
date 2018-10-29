@@ -7,10 +7,19 @@
 		<form>
 			username <input id="usernameInput" type="text" name="username">
 		</form>
-		<button onclick="AddUser()">Add User</button>
-		<button onclick="SendConfigJSON()">Send Config</button>
-		<button onclick="LoadGame()">Load Game</button>
-		<button onclick="AddSettlement()">Add Settlement</button>
+		<div id="userArea">
+			<button onclick="AddUser()">Add User</button>
+			<button onclick="RemoveUser()">Remove User</button>
+		</div>
+		
+		<div id="configArea">
+			<button onclick="SendConfigJSON()">Send Config</button>
+		</div>
+		
+		<div id="gameArea">
+			<button onclick="LoadGame()">Load Game</button>
+			<button onclick="AddSettlement()">Add Settlement</button>
+		</div>
 		
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="views/appviews/fake/js/FakeSocketCommunications.js"></script>

@@ -12,7 +12,8 @@ var tv_app_port = 3000;
 var an_app_port = 4000;
 
 // socket io +===================================================================
-require('./app/messagebroker/message-broker').SetupSockets(tv_io, an_io);
+require('./app/messagebroker/TV-IO-message-broker').Load(tv_io);
+require('./app/messagebroker/AN-IO-message-broker').Load(an_io, tv_io);
 
 // routes =======================================================================
 tv_app.use(express.static('app'));
