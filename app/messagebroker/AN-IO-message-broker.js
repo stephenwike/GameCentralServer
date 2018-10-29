@@ -39,9 +39,11 @@ function LoadANSockets()
 			if (commRulesService.CanCommunicate(args.id))
 			{
 				commRulesService.LimitCommunicationsTo(args.id);
+
 				socket.broadcast.emit('configholding', args);
 				gameConfigService.SetGameConfig(args);
 				TV.emit('routeconfig');
+
 			}
 		});
 		socket.on('updateconfig', (args) => {
@@ -62,6 +64,13 @@ function LoadANSockets()
 				var gameArgs = gameConfigService.GetGameData();
 				TV.emit('routegame', args);
 				AN.emit('startgame', gameArgs);
+			}
+		});
+		socket.on('updategamedata', (args) => {
+			if (commRulesService.CanCommunicate(args.id))
+			{
+				gameConfigService.
+				TV.emit('updategamedata', args);
 			}
 		});
 

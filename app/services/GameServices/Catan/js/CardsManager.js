@@ -15,7 +15,11 @@ function InitCards()
     ResCards.counts = [19,19,19,19,19];
 
     Cards.Dev = DevCards;
+    console.log("Dev Cards:");
+    console.log(Cards.Dev);
     Cards.Res = ResCards;
+    console.log("Res Cards:");
+    console.log(Cards.Res);
 }
 
 function ShuffleDevCards()
@@ -28,6 +32,8 @@ function ShuffleDevCards()
         Cards.Dev.types.splice(rand,1);
     }
     Cards.Dev.types = cardsTemp;
+    console.log("New Shuffled Order:");
+    console.log(Cards.Dev);
 }
 
 module.exports = {
@@ -37,10 +43,12 @@ module.exports = {
     },
     Shuffle: function()
     {
-        return ShuffleDevCards();
+        ShuffleDevCards();
     },
     GetCards: function()
     {
+        console.log("Returning Cards");
+        console.log(Cards);
         return Cards;
     }
 }

@@ -28,7 +28,7 @@ function LoadTVSockets()
 		// Game Management ===============================================================================
 		socket.on('getgamedata', (args) => {
 			var gameData = gameConfigService.GetGameData();
-			socket.emit('updategamedata', gameData);
+			socket.emit('initgamedata', gameData);
 		});
 	});
 }

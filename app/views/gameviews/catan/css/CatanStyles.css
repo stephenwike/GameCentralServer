@@ -152,12 +152,14 @@
 }
 
 .city{
+    background: black;
     position: absolute;
     z-index: 6px;
     height: 4%;
 }
 
 .road{
+    background-color: blue;
     position: absolute;
     z-index: 5px;
     height: 1.5%;

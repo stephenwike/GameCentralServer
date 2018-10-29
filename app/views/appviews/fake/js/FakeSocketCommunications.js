@@ -18,7 +18,7 @@ function AddUser()
 	socket.emit('addplayer', { "username" : val });
 }
 
-function SendConfigJSON()
+function SendConfig()
 {
 	var args = {};
 	args.id = socket.id;
@@ -29,7 +29,7 @@ function SendConfigJSON()
 	configOption1.Description = "Description of config option 1 here. This should make it look like there is a much more in-depth description of what this configuration option is actuall trying to accomplish.";
 	configOption1.SelectionType = "Dropdown";
 	configOption1.Options = [ "1", "2", "3", "4" ];
-	configOption1.Selected = 3;
+	configOption1.Selected = 0;
 
 	var configOption2 = {};
 	configOption2.Title = "Option 2 Title";
@@ -65,5 +65,18 @@ function LoadGame(data)
 
 function AddSettlement(data)
 {
-	socket.emit('updategame', { "id": socket.id });
+	var args = {};
+	args.id = socket.id;
+
+	var changeItem1 = [];
+	changeItem1.Type = "AddSettlement";
+	changeItem1.Id = "xyz";
+
+	var changeItem2 = [];
+	changeItem2.Type = "AddRoad";
+	changeItem2.Id = "qrp";
+
+	var changeLog = [ changeItem1, changeItem2 ];
+
+	socket.emit('updategamedata', args);
 }

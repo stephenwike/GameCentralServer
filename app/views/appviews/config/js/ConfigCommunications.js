@@ -11,6 +11,9 @@ function ConnectionEntry(data)
 
 function PopulateConfig(data)
 {
+	// Log data
+	console.log(data);
+
 	// Validate Data
 	var ValidateMessage = "";
 	if (data == undefined) ValidateMessage = "Data undefined";

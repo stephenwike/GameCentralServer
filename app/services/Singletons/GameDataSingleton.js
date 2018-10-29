@@ -1,35 +1,21 @@
-class GameData
-{
-    constructor()
-    {
-        this.gameData = {};
+var GameDataSingleton = (function () {
+    var Instance;
+
+    function createInstance() {
+        var object = new Object();
+        return object;
     }
 
-    set GameData(data)
-    {
-        this. gameData = data;
-    }
-
-    get GameData()
-    {
-        return this.gameData;
-    }
-}
-
-class GameDataSingleton
-{
-    constructor()
-    {
-        if (!GameDataSingleton.Instance)
+    return {
+        GetInstance: function () 
         {
-            GameDataSingleton.Instance = new GameData();
+            if (!Instance) 
+            {
+                Instance = createInstance();
+            }
+            return Instance;
         }
     }
-
-    GetInstance()
-    {
-        return GameDataSingleton.Instance;
-    }
-}
+});
 
 module.exports = GameDataSingleton;

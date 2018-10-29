@@ -1,25 +1,21 @@
-class GameConfig
-{
-    constructor()
-    {
-        this.Config = {};
-    }
-}
+var GameConfigSingleton = (function () {
+    var Instance;
 
-class GameConfigSingleton
-{
-    constructor()
-    {
-        if(!GameConfigSingleton.Instance)
+    function CreateInstance() {
+        var object = new Object();
+        return object;
+    }
+
+    return {
+        GetInstance: function() 
         {
-            GameConfigSingleton.Instance = new GameConfig();
+            if (!Instance)
+            {
+                Instance = CreateInstance();
+            }
+            return Instance;
         }
     }
-
-    GetInstance()
-    {
-        return GameConfigSingleton.Instance;
-    }
-}
+});
 
 module.exports = GameConfigSingleton;

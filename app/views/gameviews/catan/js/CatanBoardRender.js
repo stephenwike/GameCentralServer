@@ -9,11 +9,11 @@ function RenderBoard(data)
     var ValidateMessage = "";
     if (data == undefined) ValidateMessage = "data undefined";
     else if (data.Game == undefined) ValidateMessage = "data.Game undefined";
-    else if (data.Game.Tiles = undefined) ValidateMessage = "data.Game.Tiles undefined";
-    else if (data.Game.Ports = undefined) ValidateMessage = "data.Game.Ports undefined";
-    else if (data.Game.Cards = undefined) ValidateMessage = "data.Game.Cards undefined";
-    else if (data.Game.Cards.Dev = undefined) ValidateMessage = "data.Game.Cards.Dev undefined";
-    else if (data.Game.Cards.Res = undefined) ValidateMessage = "data.Game.Cards.Res undefined";
+    else if (data.Game.Tiles == undefined) ValidateMessage = "data.Game.Tiles undefined";
+    else if (data.Game.Ports == undefined) ValidateMessage = "data.Game.Ports undefined";
+    else if (data.Game.Cards == undefined) ValidateMessage = "data.Game.Cards undefined";
+    else if (data.Game.Cards.Dev == undefined) ValidateMessage = "data.Game.Cards.Dev undefined";
+    else if (data.Game.Cards.Res == undefined) ValidateMessage = "data.Game.Cards.Res undefined";
     if (ValidateMessage !== "")
     {
         console.log(ValidateMessage);
@@ -34,8 +34,8 @@ function RenderBoard(data)
     PlaceResCards(data.Game.Cards.Res);
 
     // Todo:  Remove when done
-    //SetCitySpaces();
-    //SetRoadSpaces();
+    SetCitySpaces();
+    SetRoadSpaces();
 }
 
 function SizeGameBoard()

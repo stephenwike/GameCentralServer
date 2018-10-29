@@ -3,6 +3,10 @@ var Players = {};
 module.exports = {
     Init: function(number, players)
     {
+        // Log Init
+        console.log("Init players: param number: " + number + ", param players:");
+        console.log(players);
+
         // Reset data
         Players.Data = [];
         Players.Player = {};
@@ -14,22 +18,12 @@ module.exports = {
         // number specified doesn't match number of connections.
         if (number != playerKeys.length) return;
         // Wrong number of players.
-        if (number < 3 || number > 4) return;
+        if (number < 1 || number > 4) return;
 
         // Convert player object to player array
         for (var i = 0; i < playerKeys.length; ++i)
         {
             Players.Data.push(players[playerKeys[i]]);
-            console.log("***--------------------------------------------***");
-            console.log("***--------------------------------------------***");
-            console.log("***--------------------------------------------***");
-            console.log("***--------------------------------------------***");
-            console.log(players[playerKeys[i]]);
-            console.log(players[playerKeys[i]].username);
-            console.log("***--------------------------------------------***");
-            console.log("***--------------------------------------------***");
-            console.log("***--------------------------------------------***");
-            console.log("***--------------------------------------------***");
             Players.Player[players[playerKeys[i]].username] = {};
             Players.Player[players[playerKeys[i]].username].AvailableCities = 4;
             Players.Player[players[playerKeys[i]].username].AvailableSettlements = 5;
@@ -40,11 +34,13 @@ module.exports = {
     },
     SetOrder: function()
     {
+        console.log("SetOrder called.");
         var playerNum = Players.Data.length;
+        console.log("Player count = " + playerNum);
 
         // Randomize player order.
         var tempPlayers = []
-        for(var i = 0; i < playerNum;){
+        for(var i = 0; i < Players.Data.length;){
             var rand = Math.floor(Math.random()*playerNum);
             tempPlayers.push(Players.Data[rand]);
             Players.Data.splice(rand,1);

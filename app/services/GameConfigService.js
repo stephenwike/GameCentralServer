@@ -2,35 +2,40 @@ var gameConfigSingleton = require('./Singletons/GameConfigSingleton');
 var gameDataSingleton = require('./Singletons/GameDataSingleton');
 var gameConfig = new gameConfigSingleton().GetInstance();
 var gameData = new gameDataSingleton().GetInstance();
+var GameService;
 
 module.exports = {
     SetGameConfig: function(args)
     {
-        gameConfig.Config = args;
+        gameConfig = args;
     },
     GetGameConfig: function()
     {
-        return gameConfig.gameConfig;
+        return gameConfig;
     },
     SetupGame: function(args, players)
     {
-        var data;
         switch(args["gameName"]) 
         {
             case "Catan":
-                data = require('./GameServices/Catan/CatanService').InitializeGame(gameConfig.GetConfig(), players);
+                GameService = require('./GameServices/Catan/CatanService');
                 break;
         }
 
+        // Initialize Game
+        var data = GameService.InitializeGame(gameConfig, players);
+
         // Place config and data in gamedata
-        gameData.SetGameData(
+        gameData =
         {
-            "Config": gameConfig.gameConfig,
+            "Config": gameConfig,
             "Game": data
-        });
+        };
     },
     GetGameData: function()
     {
-        return gameData.gameData;
+        console.log("Returning Game Data");
+        console.log(gameData);
+        return gameData;
     }
 }
