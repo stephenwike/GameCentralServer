@@ -68,15 +68,20 @@ function AddSettlement(data)
 	var args = {};
 	args.id = socket.id;
 
-	var changeItem1 = [];
+	var changeItem1 = {};
 	changeItem1.Type = "AddSettlement";
-	changeItem1.Id = "xyz";
+	changeItem1.Id = "vert_Al";
 
-	var changeItem2 = [];
+	var changeItem2 = {};
 	changeItem2.Type = "AddRoad";
 	changeItem2.Id = "qrp";
 
-	var changeLog = [ changeItem1, changeItem2 ];
+	var changeItem3 = {};
+	changeItem3.Type = "AddSettlement";
+	changeItem3.Id = "vert_CEH";
+
+	var changeLog = [ changeItem1, changeItem2, changeItem3 ];
+	args.changes = changeLog;
 
 	socket.emit('updategamedata', args);
 }

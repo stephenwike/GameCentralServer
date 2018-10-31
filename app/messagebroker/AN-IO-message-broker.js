@@ -69,8 +69,16 @@ function LoadANSockets()
 		socket.on('updategamedata', (args) => {
 			if (commRulesService.CanCommunicate(args.id))
 			{
-				gameConfigService.
-				TV.emit('updategamedata', args);
+				console.log("***********************************************");
+				console.log("***********************************************");
+				console.log(args);
+				console.log("***********************************************");
+				console.log("***********************************************");
+				console.log(gameConfigService.Service());
+				console.log("***********************************************");
+				console.log("***********************************************");
+				var updateArgs = gameConfigService.Service().Update(args);
+				TV.emit('updategamedata', updateArgs);
 			}
 		});
 

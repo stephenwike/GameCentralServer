@@ -34,8 +34,8 @@ function RenderBoard(data)
     PlaceResCards(data.Game.Cards.Res);
 
     // Todo:  Remove when done
-    SetCitySpaces();
-    SetRoadSpaces();
+    SetCitySpaces(data.Game.Cities);
+    SetRoadSpaces(data.Game.Roads);
 }
 
 function SizeGameBoard()

@@ -3,6 +3,8 @@ var Tiles = require('./js/TilesManager');
 var Cards = require('./js/CardsManager');
 var Ports = require('./js/PortsManager');
 var Cities = require('./js/CitiesManager');
+var Roads = require('./js/RoadsManager');
+var ChangeLog;
 
 module.exports = {
     InitializeGame: function(config, connections)
@@ -29,6 +31,7 @@ module.exports = {
         Cards.Init();
         Ports.Init();
         Cities.Init();
+        Roads.Init();
 
         // SetupPlayers
         console.log("Setting up players...");
@@ -52,6 +55,7 @@ module.exports = {
         var cards = Cards.GetCards();
         var ports = Ports.GetPorts();
         var cities = Cities.GetCities();
+        var roads = Roads.GetRoads();
 
         // Create and return setup data
         var data = {
@@ -59,11 +63,17 @@ module.exports = {
             "Tiles": tiles,
             "Cards": cards,
             "Ports": ports,
-            "Cities": cities
+            "Cities": cities,
+            "Roads": roads
         }
         console.log("Returning Game Object:");
         console.log(data);
 
         return data;
+    },
+    Update(data)
+    {
+        ChangeLog = data;
+        return ChangeLog;
     }
 }

@@ -37,5 +37,9 @@ module.exports = {
         console.log("Returning Game Data");
         console.log(gameData);
         return gameData;
-    }
+    },
+    Service: function()
+    {
+        return GameService;
+    } 
 }

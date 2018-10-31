@@ -15,5 +15,7 @@ function InitializeGame(data)
 
 function UpdateGameData(data)
 {
-    //UpdateGameData(data);
+    console.log("update arguments");
+    console.log(data);
+    ParseUpdateData(data);
 }
