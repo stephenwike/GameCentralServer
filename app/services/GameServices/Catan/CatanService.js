@@ -1,3 +1,4 @@
+var Config = {};
 var Players = require('./js/PlayersManager');
 var Tiles = require('./js/TilesManager');
 var Cards = require('./js/CardsManager');
@@ -9,13 +10,16 @@ var ChangeLog;
 module.exports = {
     InitializeGame: function(config, connections)
     {
+        // Get usernames
+        var playerKeys = Object.keys(connections);
+
+        // Capture Config
+        Config.PlayerCount = (config === undefined || config.PlayerCount === undefined) ? playerKeys.length : config.PlayerCount;
+        Config.Items = (config === undefined || config.Items === undefined) ? [] : config.Items;
+
         // Validate
         var ValidateMessage = "";
-        if (config == undefined) ValidateMessage = "config undefined";
-        else if (config.config == undefined) ValidateMessage = "config.config undefined";
-        else if (config.config.length == 0) ValidateMessage = "configs are empty";
-        else if (config.config[0].Options == undefined) ValidateMessage = "config.config[0].Options undefined";
-        else if (connections == undefined) ValidateMessage = "connections undefined";
+        if (connections === undefined) ValidateMessage = "connections undefined.";
         if (ValidateMessage !== "")
         {
             console.log(ValidateMessage);

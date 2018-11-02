@@ -1,63 +1,85 @@
 var Cities = {}
-Cities.vert_Al = {}
+
+function InitializeCities()
+{	
+	// Positioning data
+	var cities = GetCityVertData();
+	CreateCityObjects(cities);
+}
+
+function GetCityVertData(players = 3)
+{
+	Cities = {};
+	var verts = {};
+	if (players === 3 || players === 4)
+	{
+		// For 3-4 player game
+		verts.tag = 
+		[
+			"l_1", "u_1", "1_2", "2", "2_3", "u_3", "l_3", 
+			"4", "1_4", "1_4_5", "1_2_5", "2_5_6", "2_3_6", "3_6_7", "3_7", "7", 
+			"u_8", "4_8", "4_8_9", "4_5_9", "5_9_10", "5_6_10", "6_10_11", "6_7_11", "7_11_12", "7_12", "u_12", 
+			"l_8", "8_13", "8_9_13", "9_13_14", "9_10_14", "10_14_15", "10_11_15", "11_15_16", "11_12_16", "12_16", "l_12", 
+			"13", "13_17", "13_14_17", "14_17_18", "14_15_18", "15_18_19", "15_16_19", "16_19", "16", 
+			"u_17", "l_17", "17_18", "18", "18_19", "l_19", "u_19"
+		];
+		verts.x = 
+		[
+			4, 5, 6, 7, 8, 9, 10,
+			3, 4, 5, 6, 7, 8, 9, 10, 11,
+			2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
+			2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
+			3, 4, 5, 6, 7, 8, 9, 10, 11,
+			4, 5, 6, 7, 8, 9, 10
+		];
+		verts.y = 
+		[
+			4, 3, 4, 3, 4, 3, 4,
+			7, 6, 7, 6, 7, 6, 7, 6, 7,
+			10, 9, 10, 9, 10, 9, 10, 9, 10, 9, 10,
+			12, 13, 12, 13, 12, 13, 12, 13, 12, 13, 12,
+			15, 16, 15, 16, 15, 16, 15, 16, 15,
+			18, 19, 18, 19, 18, 19, 18
+		];
+		verts.ySections = 22;
+		verts.yRatio = 11 / ( 7 * Math.sqrt(3) ); 
+		verts.yPadding = (1 - verts.yRatio) / 2;
+		verts.xSections = 14;
+		verts.xRatio = 1;
+		verts.xPadding = 0;
+		verts.HeightPercent = 2;
+		verts.WidthPercent = 2; 
+	}
+	else if (players === 5 || players === 6)
+	{
+		// For 5-6 player game
+		// (to be defined...)
+	}
+	return verts;
+}
+
+function CreateCityObjects(cities)
+{
+	for (var i = 0; i < cities.tag.length; ++i)
+	{
+		var CityName = "vert_" + cities.tag[i];
+		Cities[CityName] = {};
+		Cities[CityName].IsSettledBy = "empty";
+		Cities[CityName].IsCity = false;
+		Cities[CityName].xPos = GetPos(cities.x[i], cities.xSections, cities.xRatio, cities.xPadding);
+		Cities[CityName].yPos = GetPos(cities.y[i], cities.ySections, cities.yRatio, cities.yPadding);
+	}
+}
+
+function GetPos(section, sectioncount, ratio, padding)
+{
+	return (((section / sectioncount) * ratio) * 100) + (padding * 100);
+}
 
 module.exports = {
     Init: function()
     {
-        Cities.vert_Al = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_Ar = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_B = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_AB = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_AC = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_C = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_Dr = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_BD = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_ABE = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_ACE = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_CF = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_Fl = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_Dl = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_BDG = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_BEG = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_CEH = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_CFH = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_Fr = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_DI = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_DGI = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_EGJ = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_EHJ = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_FHK = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_FK = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_I = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_GIL = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_GJL = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_HJM = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_HKM = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_K = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_IN = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_ILN = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_JLO = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_JMO = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_KMP = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_KP = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_Nl = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_LNQ = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_LOQ = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_MOR = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_MPR = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_Pr = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_Nr = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_NQ = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_OQS = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_ORS = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_PR = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_Pl = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_Q = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_QS = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_RS = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_R = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_Sl = { "IsSettledBy": "empty", "IsCity": false };
-		Cities.vert_Sr = { "IsSettledBy": "empty", "IsCity": false };
+		InitializeCities();
     },
     GetCities: function()
     {

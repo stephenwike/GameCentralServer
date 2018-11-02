@@ -2,79 +2,106 @@ var Roads = {};
 
 function InitializeRoads()
 {
+    // Positioning data
+	var roads = GetRoadEdgeData();
+	CreateRoadObjects(roads);
+}
+
+function GetRoadEdgeData(players = 3)
+{
     Roads = {};
-    Roads.edge_Al_Ar = { "IsBuiltBy": "empty" };
-    Roads.edge_Al_AB = { "IsBuiltBy": "empty" };
-    Roads.edge_Ar_AC = { "IsBuiltBy": "empty" };
-    Roads.edge_B_AB = { "IsBuiltBy": "empty" };
-    Roads.edge_AC_C = { "IsBuiltBy": "empty" };
-    Roads.edge_B_BD = { "IsBuiltBy": "empty" };
-    Roads.edge_AB_ABE = { "IsBuiltBy": "empty" };
-    Roads.edge_AC_ACE = { "IsBuiltBy": "empty" };
-    Roads.edge_C_CF = { "IsBuiltBy": "empty" };
-    Roads.edge_Dr_BD = { "IsBuiltBy": "empty" };
-    Roads.edge_ABE_ACE = { "IsBuiltBy": "empty" };
-    Roads.edge_CF_Fl = { "IsBuiltBy": "empty" };
-    Roads.edge_Dr_Dl = { "IsBuiltBy": "empty" };
-    Roads.edge_BD_BDG = { "IsBuiltBy": "empty" };
-    Roads.edge_ABE_BEG = { "IsBuiltBy": "empty" };
-    Roads.edge_ACE_CEH = { "IsBuiltBy": "empty" };
-    Roads.edge_CF_CFH = { "IsBuiltBy": "empty" };
-    Roads.edge_Fl_Fr = { "IsBuiltBy": "empty" };
-    Roads.edge_BDG_BEG = { "IsBuiltBy": "empty" };
-    Roads.edge_CEH_CFH = { "IsBuiltBy": "empty" };
-    Roads.edge_Dl_DI = { "IsBuiltBy": "empty" };
-    Roads.edge_BDG_DGI = { "IsBuiltBy": "empty" };
-    Roads.edge_BEG_EGJ = { "IsBuiltBy": "empty" };
-    Roads.edge_CEH_EHJ = { "IsBuiltBy": "empty" };
-    Roads.edge_CFH_FHK = { "IsBuiltBy": "empty" };
-    Roads.edge_Fr_FK = { "IsBuiltBy": "empty" };
-    Roads.edge_DI_DGI = { "IsBuiltBy": "empty" };
-    Roads.edge_EGJ_EHJ = { "IsBuiltBy": "empty" };
-    Roads.edge_FHK_FK = { "IsBuiltBy": "empty" };
-    Roads.edge_DI_I = { "IsBuiltBy": "empty" };
-    Roads.edge_DGI_GIL = { "IsBuiltBy": "empty" };
-    Roads.edge_EGJ_GJL = { "IsBuiltBy": "empty" };
-    Roads.edge_EHJ_HJM = { "IsBuiltBy": "empty" };
-    Roads.edge_FHK_HKM = { "IsBuiltBy": "empty" };
-    Roads.edge_FK_K = { "IsBuiltBy": "empty" };
-    Roads.edge_GIL_GJL = { "IsBuiltBy": "empty" };
-    Roads.edge_HJM_HKM = { "IsBuiltBy": "empty" };
-    Roads.edge_I_IN = { "IsBuiltBy": "empty" };
-    Roads.edge_GIL_ILN = { "IsBuiltBy": "empty" };
-    Roads.edge_GJL_JLO = { "IsBuiltBy": "empty" };
-    Roads.edge_HJM_JMO = { "IsBuiltBy": "empty" };
-    Roads.edge_HKM_KMP = { "IsBuiltBy": "empty" };
-    Roads.edge_K_KP = { "IsBuiltBy": "empty" };
-    Roads.edge_IN_ILN = { "IsBuiltBy": "empty" };
-    Roads.edge_JLO_JMO = { "IsBuiltBy": "empty" };
-    Roads.edge_KMP_KP = { "IsBuiltBy": "empty" };
-    Roads.edge_IN_Nl = { "IsBuiltBy": "empty" };
-    Roads.edge_ILN_LNQ = { "IsBuiltBy": "empty" };
-    Roads.edge_JLO_LOQ = { "IsBuiltBy": "empty" };
-    Roads.edge_JMO_MOR = { "IsBuiltBy": "empty" };
-    Roads.edge_KMP_MPR = { "IsBuiltBy": "empty" };
-    Roads.edge_KP_Pr = { "IsBuiltBy": "empty" };
-    Roads.edge_LNQ_LOQ = { "IsBuiltBy": "empty" };
-    Roads.edge_MOR_MPR = { "IsBuiltBy": "empty" };
-    Roads.edge_Nl_Nr = { "IsBuiltBy": "empty" };
-    Roads.edge_LNQ_NQ = { "IsBuiltBy": "empty" };
-    Roads.edge_LOQ_OQS = { "IsBuiltBy": "empty" };
-    Roads.edge_MOR_ORS = { "IsBuiltBy": "empty" };
-    Roads.edge_MPR_PR = { "IsBuiltBy": "empty" };
-    Roads.edge_Pr_Pl = { "IsBuiltBy": "empty" };
-    Roads.edge_Nr_NQ = { "IsBuiltBy": "empty" };
-    Roads.edge_OQS_ORS = { "IsBuiltBy": "empty" };
-    Roads.edge_PR_Pl = { "IsBuiltBy": "empty" };
-    Roads.edge_NQ_Q = { "IsBuiltBy": "empty" };
-    Roads.edge_OQS_QS = { "IsBuiltBy": "empty" };
-    Roads.edge_ORS_RS = { "IsBuiltBy": "empty" };
-    Roads.edge_PR_R = { "IsBuiltBy": "empty" };
-    Roads.edge_Q_QS = { "IsBuiltBy": "empty" };
-    Roads.edge_RS_R = { "IsBuiltBy": "empty" };
-    Roads.edge_QS_Sl = { "IsBuiltBy": "empty" };
-    Roads.edge_RS_Sr = { "IsBuiltBy": "empty" };
-    Roads.edge_Sl_Sr = { "IsBuiltBy": "empty" };
+	var edges = {};
+	if (players === 3 || players === 4)
+	{
+		// For 3-4 player game
+		edges.tag = 
+		[
+			"l_1_TO_u_1", "u_1_TO_1_2", "1_2_TO_2", "2_TO_2_3", "2_3_TO_u_3", "u_3_TO_l_3",
+            "l_1_TO_1_4", "1_2_TO_1_2_5", "2_3_TO_2_3_6", "l_3_TO_3_7",
+            "4_TO_1_4", "1_4_TO_1_4_5", "1_4_5_TO_1_2_5", "1_2_5_TO_2_5_6", "2_5_6_TO_2_3_6", "2_3_6_TO_3_6_7", "3_6_7_TO_3_7", "3_7_TO_7",
+            "4_TO_4_8", "1_4_5_TO_4_5_9", "2_5_6_TO_5_6_10", "3_6_7_TO_6_7_11", "7_TO_7_11",
+            "u_8_TO_4_8", "4_8_TO_4_8_9", "4_8_9_TO_4_5_9", "4_5_9_TO_5_9_10", "5_9_10_TO_5_6_10", "5_6_10_TO_6_10_11", "6_10_11_TO_6_7_11", "6_7_11_TO_7_11_12", "7_11_12_TO_7_12", "7_12_TO_u_12",
+            "u_8_TO_l_8", "4_8_9_TO_8_9_13", "5_9_10_TO_9_10_14", "6_10_11_TO_10_11_15", "7_11_12_TO_11_12_16", "u_12_TO_l_12",
+            "l_8_TO_8_13", "8_13_TO_8_9_13", "8_9_13_TO_9_13_14", "9_13_14_TO_9_10_14", "9_10_14_TO_10_14_15", "10_14_15_TO_10_11_15", "10_11_15_TO_11_15_16", "11_15_16_TO_11_12_16", "11_12_16_TO_12_16", "12_16_TO_l_12",
+            "8_13_TO_13", "9_13_14_TO_13_14_17", "10_14_15_TO_14_15_18", "11_15_16_TO_15_16_19", "12_16_TO_16",
+            "13_TO_13_17", "13_17_TO_13_14_17", "13_14_17_TO_14_17_18", "14_17_18_TO_14_15_18", "14_15_18_TO_15_18_19", "15_18_19_TO_15_16_19", "15_16_19_TO_16_19", "16_19_TO_16",
+            "13_17_TO_u_17", "14_17_17_TO_17_18", "15_18_19_TO_18_19", "16_19_TO_u_19",
+            "u_17_TO_l_17", "l_17_TO_17_18", "17_18_TO_18", "18_TO_18_19", "18_19_TO_l_19", "l_19_TO_u_19"
+		];
+		edges.x = 
+		[
+            4, 5, 6, 7, 8, 9,
+            4, 6, 8, 10, 
+            3, 4, 5, 6, 7, 8, 9, 10,
+            3, 5, 7, 9, 11,
+            2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
+            2, 4, 6, 8, 10, 12,
+            2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
+            3, 5, 7, 9, 11,
+            3, 4, 5, 6, 7, 8, 9, 10,
+            4, 6, 8, 10,
+			4, 5, 6, 7, 8, 9
+		];
+		edges.y = 
+		[
+            7, 7, 7, 7, 7, 7,
+            12, 12, 12, 12,
+            13, 13, 13, 13, 13, 13, 13, 13,
+            18, 18, 18, 18, 18,
+            19, 19, 19, 19, 19, 19, 19, 19, 19, 19,
+            24, 24, 24, 24, 24, 24,
+            25, 25, 25, 25, 25, 25, 25, 25, 25, 25,
+            30, 30, 30, 30, 30,
+            31, 31, 31, 31, 31, 31, 31, 31,
+            36, 36, 36, 36,
+            37, 37, 37, 37, 37, 37
+        ];
+        edges.rot = 
+        [
+            -30, 30, -30, 30, -30, 30,
+            90, 90, 90, 90,
+            -30, 30, -30, 30, -30, 30, -30, 30, 
+            90, 90, 90, 90, 90,
+            -30, 30, -30, 30, -30, 30, -30, 30, -30, 30,
+            90, 90, 90, 90, 90, 90,
+            30, -30, 30, -30, 30, -30, 30, -30, 30, -30,
+            90, 90, 90, 90, 90,
+            30, -30, 30, -30, 30, -30, 30, -30, 
+            90, 90, 90, 90,
+            30, -30, 30, -30, 30, -30
+        ]
+        edges.ySections = 44;
+		edges.yRatio = 11 / ( 7 * Math.sqrt(3) ); 
+		edges.yPadding = (1 - edges.yRatio) / 2;
+		edges.xSections = 14;
+		edges.xRatio = 1;
+		edges.xPadding = 0;
+		edges.HeightPercent = 1;
+		edges.WidthPercent = CalculateWidth(edges.xSections); 
+    }
+    return edges;
+}
+
+function CalculateWidth(sections)
+{
+    return 1 / sections * 100;
+}
+
+function CreateRoadObjects(roads)
+{
+    for (var i = 0; i < roads.tag.length; ++i)
+	{
+		var RoadName = "edge_" + roads.tag[i];
+		Roads[RoadName] = {};
+		Roads[RoadName].OwnedBy = "empty";
+		Roads[RoadName].xPos = GetPos(roads.x[i], roads.xSections, roads.xRatio, roads.xPadding);
+		Roads[RoadName].yPos = GetPos(roads.y[i], roads.ySections, roads.yRatio, roads.yPadding);
+	}
+}
+
+function GetPos(section, sectioncount, ratio, padding)
+{
+    return (((section / sectioncount) * ratio) * 100) + (padding * 100);
 }
 
 module.exports = {

@@ -11,6 +11,9 @@ var an_io = require('socket.io')(an_server);
 var tv_app_port = 3000;
 var an_app_port = 4000;
 
+// testing ======================================================================
+require('./app/services/TestingService').RunTests();
+
 // socket io +===================================================================
 require('./app/messagebroker/TV-IO-message-broker').Load(tv_io);
 require('./app/messagebroker/AN-IO-message-broker').Load(an_io, tv_io);

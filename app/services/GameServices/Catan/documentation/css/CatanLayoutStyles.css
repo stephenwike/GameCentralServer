@@ -1,0 +1,54 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+h1 {
+	margin-left: 25px;
+}
+
+p {
+	margin-left: 25px;
+}
+
+#LayoutCanvas {
+	position: absolute;
+	top: 100px;
+	left: 25px;
+}
+
+#Pieces {
+	position: absolute;
+	top: 100px;
+	left: 25px;
+	z-index: 1;
+	width: 500px;
+	height: 500px;
+}
+
+#BottomAxisCanvas {
+	position: absolute;
+	top: 600px;
+	left: 25px;
+}
+
+#RightAxisCanvas {
+	position: absolute;
+	top: 100px;
+	left: 525px;
+}
+
+#RightRightAxisCanvas {
+	position: absolute;
+	top: 100px;
+	left: 750px;
+}
+
+.road{
+	transform: skewY(-30deg);
+	position: absolute;
+	left: 21.4286%;
+	top: 6.1988%; 
+	width: 7.1429%; 
+	height: 1%;
+}

@@ -27,4 +27,20 @@ function DrawGridLines()
 	
 	// Make dashed lines
 	context.stroke();
+	
+	// New dash thickness
+	context.beginPath();
+	context.setLineDash([1,2]);
+	
+	// Draw Horizontal Road Lines
+	for (var i = 1; i < 45;)
+	{
+		var iter = (((i/44) * r) * h) + (p * h);
+		context.moveTo(0, iter);
+		context.lineTo(w, iter);
+		i = i + 6;
+	}
+	
+	// Make dashed lines
+	context.stroke();
 }

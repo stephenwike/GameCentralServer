@@ -1,6 +1,6 @@
-var playerList = {};
-var droppedPlayerList = {};
-var playerCount = 0;
+var PlayerList = {};
+var PlayerCount = 0;
+var DroppedPlayerList = {};
 
 module.exports = {
 	AddPlayer: function(username, socketid){
@@ -11,31 +11,31 @@ module.exports = {
 		}
 
 		// Is this socket already registered?
-		var playerKeys = Object.keys(playerList);
+		var playerKeys = Object.keys(PlayerList);
 		for (var index = 0; index < playerKeys.length; ++index)
 		{
-			if (playerList[playerKeys[index]].id == socketid)
+			if (PlayerList[playerKeys[index]].id == socketid)
 			{
 				return { "isAdded": false, "Reason": "User has already registered a username."};
 			}
 		}
 
 		// Is the username on the dropped player list?
-		if (droppedPlayerList[username] != undefined)
+		if (DroppedPlayerList[username] != undefined)
 		{
-			playerList[username] = droppedPlayerList[username];
+			playerList[username] = DroppedPlayerList[username];
 			playerList[username].id = socketid;
-			delete droppedPlayerList[username]
+			delete DroppedPlayerList[username]
 
-			++playerCount;
+			++PlayerCount;
 			return { "isAdded": true, "Reason": "Username was on dropped list." };
 		}
 
 		// Is the username not already in use?
-		if (playerList[username] == undefined)
+		if (PlayerList[username] == undefined)
 		{
-			playerList[username] = {"username": username, "id": socketid};
-			++playerCount;
+			PlayerList[username] = {"username": username, "id": socketid};
+			++PlayerCount;
 			return { "isAdded": true, "Reason": "Username added." };
 		}
 		else
@@ -46,22 +46,22 @@ module.exports = {
 	RemovePlayer: function(socketid)
 	{
 		// Are there users to drop?
-		if (playerCount === 0)
+		if (PlayerCount === 0)
 		{
 			console.log("Playercount equals 0");
 			return false;
 		}
 
 		// Is the socket id on the player list?
-		var playerKeys = Object.keys(playerList);
+		var playerKeys = Object.keys(PlayerList);
 		for (var index = 0; index < playerKeys.length; ++index)
 		{
-			if (playerList[playerKeys[index]].id == socketid)
+			if (PlayerList[playerKeys[index]].id == socketid)
 			{
-				droppedPlayerList[playerKeys[index]] = playerList[playerKeys[index]]
-				delete playerList[playerKeys[index]];
+				DroppedPlayerList[playerKeys[index]] = PlayerList[playerKeys[index]]
+				delete PlayerList[playerKeys[index]];
 
-				--playerCount;
+				--PlayerCount;
 				return true;
 			}
 		}
@@ -70,13 +70,10 @@ module.exports = {
 	},
 	ClearPlayers: function()
 	{
-		playerList = [];
-		droppedPlayerList = [];
-		playerCount = 0;
+		PlayerList = [];
+		DroppedPlayerList = [];
+		PlayerCount = 0;
 	},
-	PlayerCount:  function()
-	{
-		return playerCount;
-	},
-	PlayerList: playerList
+	PlayerCount:  PlayerCount,
+	PlayerList: PlayerList
 }
