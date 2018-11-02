@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+</head>
+<body>
+	<canvas id="LayoutCanvas" height="500" width="500">
+	</canvas>
+	<canvas id="BottomAxisCanvas" height="500" width="500">
+	</canvas>
+	<script src="js/GridLines.js"></script>
+	<script src="js/BindHexes.js"></script>
+	<script src="js/Hexes.js"></script>
+	<script src="js/BottomPercentages.js"></script>
+	<script>
+		var r = 11 / ( 7 * Math.sqrt(3) ); 	// Ratio between height and width.
+		var p = (1 - r) / 2; 				// Padding ratio for height to make square ratio.
+	
+		// LayoutCanvas
+		DrawGridLines();
+		DrawBindHexes();
+		DrawHexes();
+		
+		//BottomAxisCanvas
+		DrawBottomPercentages();
+		
+	</script>
+</body>
+</html>
