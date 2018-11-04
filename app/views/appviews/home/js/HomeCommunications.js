@@ -1,7 +1,7 @@
 var socket = io.connect();
 socket.on('connect', function(data) { ConnectionEntry(data); });
 socket.on('updateconnectionslist', function(data) { UpdateConnectionsList(data); });
-socket.on('routeconfig', function() { document.location = "config"; });
+socket.on('route', function() { document.location = "config"; });
 
 function ConnectionEntry(data)
 {

@@ -8,12 +8,13 @@ function RenderBoard(data)
     //Validate data
     var ValidateMessage = "";
     if (data == undefined) ValidateMessage = "data undefined";
-    else if (data.Game == undefined) ValidateMessage = "data.Game undefined";
-    else if (data.Game.Tiles == undefined) ValidateMessage = "data.Game.Tiles undefined";
-    else if (data.Game.Ports == undefined) ValidateMessage = "data.Game.Ports undefined";
-    else if (data.Game.Cards == undefined) ValidateMessage = "data.Game.Cards undefined";
-    else if (data.Game.Cards.Dev == undefined) ValidateMessage = "data.Game.Cards.Dev undefined";
-    else if (data.Game.Cards.Res == undefined) ValidateMessage = "data.Game.Cards.Res undefined";
+    else if (data.Tiles == undefined) ValidateMessage = "data.Tiles undefined";
+    else if (data.Ports == undefined) ValidateMessage = "data.Ports undefined";
+    else if (data.Cards == undefined) ValidateMessage = "data.Cards undefined";
+    else if (data.Cards.Dev == undefined) ValidateMessage = "data.Cards.Dev undefined";
+    else if (data.Cards.Res == undefined) ValidateMessage = "data.Cards.Res undefined";
+    else if (data.Cities == undefined) ValidateMessage = "data.Citied undefined";
+    else if (data.Roads == undefined) ValidateMessage = "data.Roads undefined";
     if (ValidateMessage !== "")
     {
         console.log(ValidateMessage);
@@ -25,17 +26,18 @@ function RenderBoard(data)
     
     // place static game pieces
     //PlaceShores(); // Shore are static and don't really need to be initialized
-    PlaceTiles(data.Game.Tiles);
-    PlacePorts(data.Game.Ports);
+    PlaceTiles(data.Tiles);
+    PlaceNumbers(data.Tiles);
+    //PlacePorts(data.Ports);
 
     // place dynamic game peices
-    PlaceRobber(data.Game.Tiles);
-    PlaceDevCards(data.Game.Cards.Dev);
-    PlaceResCards(data.Game.Cards.Res);
+    PlaceRobber(data.Tiles);
+    PlaceDevCards(data.Cards.Dev);
+    PlaceResCards(data.Cards.Res);
 
-    // Todo:  Remove when done
-    SetCitySpaces(data.Game.Cities);
-    SetRoadSpaces(data.Game.Roads);
+    // Set img items to be set on subsequent update calls
+    SetRoadSpaces(data.Roads);
+    SetCitySpaces(data.Cities);
 }
 
 function SizeGameBoard()
@@ -44,9 +46,9 @@ function SizeGameBoard()
     var gbp = document.getElementById("gameboardpadding");
 
     // Set width based on gameboard ratio
-    var gbpHeight = gbp.clientWidth / (8 / (5 * Math.sqrt(3))); // Math based on hexagon board
+    var gbpHeight = gbp.clientWidth;
     gbp.style.height = gbpHeight + 'px';
-    
+
     // Set margins based on width percent
     var marginsides = (gb.clientWidth - gbp.clientWidth) / 2;
     var marginvertical = (gb.clientHeight - gbp.clientHeight) / 2; 

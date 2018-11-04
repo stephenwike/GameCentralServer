@@ -10,6 +10,9 @@ function ParseUpdateData(data)
             case "AddSettlement":
                 AddSettlement(data.changes[i].Id);
                 break;
+            case "AddCity":
+                AddCity(data.changes[i].Id);
+                break;
             case "AddRoad":
                 AddRoad(data.changes[i].Id);
                 break;

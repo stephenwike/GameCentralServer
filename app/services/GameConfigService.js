@@ -1,17 +1,15 @@
 var gameConfigSingleton = require('./Singletons/GameConfigSingleton');
 var gameDataSingleton = require('./Singletons/GameDataSingleton');
-var gameConfig = new gameConfigSingleton().GetInstance();
-var gameData = new gameDataSingleton().GetInstance();
 var GameService;
 
 module.exports = {
     SetGameConfig: function(args)
     {
-        gameConfig = args;
+        gameConfigSingleton.Set(args);
     },
     GetGameConfig: function()
     {
-        return gameConfig;
+        return gameConfigSingleton.Instance();
     },
     SetupGame: function(args, players)
     {
@@ -23,20 +21,11 @@ module.exports = {
         }
 
         // Initialize Game
-        var data = GameService.InitializeGame(gameConfig, players);
-
-        // Place config and data in gamedata
-        gameData =
-        {
-            "Config": gameConfig,
-            "Game": data
-        };
+        gameDataSingleton.Set(GameService.InitializeGame(gameConfigSingleton.Instance(), players));
     },
     GetGameData: function()
     {
-        console.log("Returning Game Data");
-        console.log(gameData);
-        return gameData;
+        return gameDataSingleton.Instance();
     },
     Service: function()
     {

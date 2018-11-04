@@ -47,8 +47,7 @@ function GetCityVertData(players = 3)
 		verts.xSections = 14;
 		verts.xRatio = 1;
 		verts.xPadding = 0;
-		verts.HeightPercent = 2;
-		verts.WidthPercent = 2; 
+		verts.thickness = 5;
 	}
 	else if (players === 5 || players === 6)
 	{
@@ -66,14 +65,16 @@ function CreateCityObjects(cities)
 		Cities[CityName] = {};
 		Cities[CityName].IsSettledBy = "empty";
 		Cities[CityName].IsCity = false;
-		Cities[CityName].xPos = GetPos(cities.x[i], cities.xSections, cities.xRatio, cities.xPadding);
-		Cities[CityName].yPos = GetPos(cities.y[i], cities.ySections, cities.yRatio, cities.yPadding);
+		Cities[CityName].xPos = GetPos(cities.x[i], cities.xSections, cities.xRatio, cities.xPadding, cities.thickness);
+		Cities[CityName].yPos = GetPos(cities.y[i], cities.ySections, cities.yRatio, cities.yPadding, cities.thickness);
+		Cities[CityName].width = cities.thickness;
+		Cities[CityName].height = cities.thickness;
 	}
 }
 
-function GetPos(section, sectioncount, ratio, padding)
+function GetPos(section, sectioncount, ratio, padding, thickness)
 {
-	return (((section / sectioncount) * ratio) * 100) + (padding * 100);
+    return (((section / sectioncount) * ratio) * 100) + (padding * 100) - (thickness / 2);
 }
 
 module.exports = {

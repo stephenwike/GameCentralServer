@@ -42,8 +42,7 @@ function LoadANSockets()
 
 				socket.broadcast.emit('configholding', args);
 				gameConfigService.SetGameConfig(args);
-				TV.emit('routeconfig');
-
+				TV.emit('route', 'config');
 			}
 		});
 		socket.on('updateconfig', (args) => {
@@ -62,22 +61,19 @@ function LoadANSockets()
 				var players = playersService.PlayerList;
 				gameConfigService.SetupGame(args, players);
 				var gameArgs = gameConfigService.GetGameData();
-				TV.emit('routegame', args);
+				TV.emit('route', args.gameName);
 				AN.emit('startgame', gameArgs);
 			}
 		});
 		socket.on('updategamedata', (args) => {
 			if (commRulesService.CanCommunicate(args.id))
 			{
-				console.log("***********************************************");
-				console.log("***********************************************");
-				console.log(args);
-				console.log("***********************************************");
-				console.log("***********************************************");
-				console.log(gameConfigService.Service());
-				console.log("***********************************************");
-				console.log("***********************************************");
-				var updateArgs = gameConfigService.Service().Update(args);
+				var gameService = gameConfigService.Service();
+				var updateArgs = "";
+				if (gameService !== undefined)
+				{
+					updateArgs = gameConfigService.Service().Update(args);
+				}
 				TV.emit('updategamedata', updateArgs);
 			}
 		});

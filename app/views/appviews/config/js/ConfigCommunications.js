@@ -1,7 +1,7 @@
 var socket = io.connect();
 socket.on('connect', function(data) { ConnectionEntry(data); });
 socket.on('updategameconfig', function(data) { PopulateConfig(data); });
-socket.on('routegame', function(data) { console.log(data); document.location = data.gameName; } );
+socket.on('route', function(data) { document.location = data; });
 
 function ConnectionEntry(data)
 {

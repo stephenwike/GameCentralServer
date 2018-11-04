@@ -44,17 +44,17 @@ function GetRoadEdgeData(players = 3)
 		];
 		edges.y = 
 		[
-            7, 7, 7, 7, 7, 7,
-            12, 12, 12, 12,
-            13, 13, 13, 13, 13, 13, 13, 13,
-            18, 18, 18, 18, 18,
-            19, 19, 19, 19, 19, 19, 19, 19, 19, 19,
-            24, 24, 24, 24, 24, 24,
-            25, 25, 25, 25, 25, 25, 25, 25, 25, 25,
-            30, 30, 30, 30, 30,
-            31, 31, 31, 31, 31, 31, 31, 31,
-            36, 36, 36, 36,
-            37, 37, 37, 37, 37, 37
+            3, 3, 3, 3, 3, 3,
+            4, 4, 4, 4,
+            6, 6, 6, 6, 6, 6, 6, 6,
+            7, 7, 7, 7, 7,
+            9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
+            10, 10, 10, 10, 10, 10,
+            12, 12, 12, 12, 12, 12, 12, 12, 12, 12,
+            13, 13, 13, 13, 13,
+            15, 15, 15, 15, 15, 15, 15, 15,
+            16, 16, 16, 16,
+            18, 18, 18, 18, 18, 18
         ];
         edges.rot = 
         [
@@ -70,21 +70,15 @@ function GetRoadEdgeData(players = 3)
             90, 90, 90, 90,
             30, -30, 30, -30, 30, -30
         ]
-        edges.ySections = 44;
+        edges.ySections = 22;
 		edges.yRatio = 11 / ( 7 * Math.sqrt(3) ); 
 		edges.yPadding = (1 - edges.yRatio) / 2;
 		edges.xSections = 14;
 		edges.xRatio = 1;
-		edges.xPadding = 0;
-		edges.HeightPercent = 1;
-		edges.WidthPercent = CalculateWidth(edges.xSections); 
+        edges.xPadding = 0;
+        edges.thickness = 1.25;
     }
     return edges;
-}
-
-function CalculateWidth(sections)
-{
-    return 1 / sections * 100;
 }
 
 function CreateRoadObjects(roads)
@@ -94,14 +88,41 @@ function CreateRoadObjects(roads)
 		var RoadName = "edge_" + roads.tag[i];
 		Roads[RoadName] = {};
 		Roads[RoadName].OwnedBy = "empty";
-		Roads[RoadName].xPos = GetPos(roads.x[i], roads.xSections, roads.xRatio, roads.xPadding);
-		Roads[RoadName].yPos = GetPos(roads.y[i], roads.ySections, roads.yRatio, roads.yPadding);
+		Roads[RoadName].xPos = GetPos(roads.x[i], roads.xSections, roads.xRatio, roads.xPadding, roads.thickness);
+        Roads[RoadName].yPos = GetPos(roads.y[i], roads.ySections, roads.yRatio, roads.yPadding, roads.thickness);
+        Roads[RoadName].rot = roads.rot[i];
+        Roads[RoadName].width = GetWidthPercent(roads.xSections, roads.rot[i], roads.thickness);
+        Roads[RoadName].height = GetHeightPercent(roads.ySections, roads.yRatio, roads.rot[i], roads.thickness);
 	}
 }
 
-function GetPos(section, sectioncount, ratio, padding)
+function GetPos(section, sectioncount, ratio, padding, thickness)
 {
-    return (((section / sectioncount) * ratio) * 100) + (padding * 100);
+    return (((section / sectioncount) * ratio) * 100) + (padding * 100) - (thickness / 2);
+}
+
+function GetWidthPercent(sectioncount, rot, thickness)
+{
+    switch(rot)
+    {
+        case -30:
+        case 30:
+            return ((1 / sectioncount) * 100) + thickness;
+        case 90:
+            return thickness;
+    }
+}
+
+function GetHeightPercent(sectioncount, ratio, rot, thickness)
+{
+    switch(rot)
+    {
+        case -30:
+        case 30:
+            return (((1 / sectioncount) * ratio) * 100) + thickness;
+        case 90:
+            return (((2 / sectioncount) * ratio) * 100) + thickness;
+    }
 }
 
 module.exports = {

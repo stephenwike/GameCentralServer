@@ -1,30 +1,27 @@
 var citiesManager = require('./../js/CitiesManager');
-var testObject = {};
-testObject.Tests = 0;
-testObject.Pass = 0;
-testObject.Failed = 0;
+var testUtils = require('./../../../TestingUtilities');
 
 function RunCityManagerTests()
 {
-    console.log("  city manager test...");
+    testUtils.SetTestSuite("CitiesManagerTests");
+    testUtils.SetTest(CityManagerInitialization, "Failure Initializing City Manager.");
+    testUtils.RunTests();
+}
 
+function CityManagerInitialization()
+{
     // Test City Manager Initialization
-    ++testObject.Tests;
     citiesManager.Init();
     var cities = citiesManager.GetCities();
     var cityKeys = Object.keys(cities);
     if (cityKeys.length !== 54)
     {
-        ++testObject.Failed;
+        return false;
     }
     else
     {
-        ++testObject.Pass;
+        return true;
     }
-
-    // Print Summary
-    console.log("    Tests: " + testObject.Tests + ", Passed: " + testObject.Pass + ", Failed: " + testObject.Failed);
-    return testObject;
 }
 
 module.exports = {

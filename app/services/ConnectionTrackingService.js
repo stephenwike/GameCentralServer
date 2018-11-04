@@ -56,10 +56,11 @@ module.exports = {
 		var playerKeys = Object.keys(PlayerList);
 		for (var index = 0; index < playerKeys.length; ++index)
 		{
-			if (PlayerList[playerKeys[index]].id == socketid)
+			var key = playerKeys[index];
+			if (PlayerList[key].id == socketid)
 			{
-				DroppedPlayerList[playerKeys[index]] = PlayerList[playerKeys[index]]
-				delete PlayerList[playerKeys[index]];
+				DroppedPlayerList[key] = PlayerList[key]
+				delete PlayerList[key];
 
 				--PlayerCount;
 				return true;

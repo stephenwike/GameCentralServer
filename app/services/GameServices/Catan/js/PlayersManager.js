@@ -5,7 +5,7 @@ module.exports = {
     {
         // Log Init
         console.log("Init players: param number: " + number + ", param players:");
-        console.log(players);
+        console.log(players); // passed connection object;
 
         // Reset data
         Players.Data = [];
@@ -23,20 +23,19 @@ module.exports = {
         // Convert player object to player array
         for (var i = 0; i < playerKeys.length; ++i)
         {
-            Players.Data.push(players[playerKeys[i]]);
-            Players.Player[players[playerKeys[i]].username] = {};
-            Players.Player[players[playerKeys[i]].username].AvailableCities = 4;
-            Players.Player[players[playerKeys[i]].username].AvailableSettlements = 5;
-            Players.Player[players[playerKeys[i]].username].AvailableRoads = 15;
-            Players.Player[players[playerKeys[i]].username].ResCards = [];
-            Players.Player[players[playerKeys[i]].username].DevCards = [];
+            var key = playerKeys[i];
+            Players.Data.push(players[key]);
+            Players.Player[key] = {};
+            Players.Player[key].AvailableCities = 4;
+            Players.Player[key].AvailableSettlements = 5;
+            Players.Player[key].AvailableRoads = 15;
+            Players.Player[key].ResCards = [];
+            Players.Player[key].DevCards = [];
         }
     },
     SetOrder: function()
     {
-        console.log("SetOrder called.");
         var playerNum = Players.Data.length;
-        console.log("Player count = " + playerNum);
 
         // Randomize player order.
         var tempPlayers = []
@@ -75,7 +74,7 @@ module.exports = {
             Players.ActiveUsername = player[0].username;
             return Players.ActiveUsername;
         }
-        else
+        else if(Players.TurnOrder.length > 0)
         {
             console.log("NEXT PLAYER:");
             var playertoback = Players.TurnOrder.splice(0,1);
@@ -84,6 +83,7 @@ module.exports = {
             Players.ActiveUsername = playertoback[0].username;
             return Players.ActiveUsername;
         }
+        else return Players.ActiveUsername = undefined;
     },
     GetPlayers: function()
     {

@@ -1,10 +1,10 @@
-var Config = {};
 var Players = require('./js/PlayersManager');
 var Tiles = require('./js/TilesManager');
 var Cards = require('./js/CardsManager');
 var Ports = require('./js/PortsManager');
 var Cities = require('./js/CitiesManager');
 var Roads = require('./js/RoadsManager');
+var Config = {};
 var ChangeLog;
 
 module.exports = {
@@ -28,8 +28,7 @@ module.exports = {
 
         // Init Assets
         console.log("Initializing Catan components...");
-        var cOpt = config.config[0];
-        Players.Init(cOpt.Options[cOpt.Selected], connections);
+        Players.Init(Config.PlayerCount, connections);
 
         Tiles.Init();
         Cards.Init();
@@ -47,10 +46,6 @@ module.exports = {
         Tiles.Shuffle();
         Cards.Shuffle();
         Ports.Shuffle();
-
-        // Place Robber
-        console.log("Placing robber...");
-        Tiles.SetRobber(); 
 
         // Get data
         console.log("capturing game data...");
@@ -70,8 +65,7 @@ module.exports = {
             "Cities": cities,
             "Roads": roads
         }
-        console.log("Returning Game Object:");
-        console.log(data);
+        console.log("returning game object...");
 
         return data;
     },

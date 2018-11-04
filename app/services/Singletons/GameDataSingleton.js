@@ -1,21 +1,23 @@
-var GameDataSingleton = (function () {
-    var Instance;
+var GameDataInstance;
 
-    function createInstance() {
-        var object = new Object();
-        return object;
-    }
-
-    return {
-        GetInstance: function () 
+module.exports = {
+    Instance: function()
+    {
+        if (!GameDataInstance) 
         {
-            if (!Instance) 
-            {
-                Instance = createInstance();
-            }
-            return Instance;
+            console.log("**************************************");
+            console.log("**************************************");
+            console.log("**************************************");
+            console.log("New Game Data Singleton instance created");
+            console.log("**************************************");
+            console.log("**************************************");
+            console.log("**************************************");
+            GameDataInstance = new Object();
         }
+        return GameDataInstance;
+    },
+    Set: function(obj)
+    {
+        GameDataInstance = obj;
     }
-});
-
-module.exports = GameDataSingleton;
+}

@@ -1,20 +1,49 @@
-var TilePos = {};
-TilePos.y = ["20","10","0","40","30","20","10","60","50","40","30","20","70","60","50","40","80","70","60"];
-TilePos.x = ["0","18.75","37.5","0","18.75","37.5","56.25","0","18.75","37.5","56.25","75","18.75","37.5","56.25","75","37.5","56.25","75"];
+var Robber;
 
 function PlaceTiles(tiles)
 {
-    console.log(tiles);
     var loc = document.getElementById("pieces");
     var div = document.createElement('div');
     div.id = "tilediv";
-    for(var i = 0; i < tiles.types.length; i++)
+
+    var tileKeys = Object.keys(tiles);
+    for(var i = 0; i < tileKeys.length; i++)
     {
+        var key = tileKeys[i];
 		var img = document.createElement("IMG");
-        img.src = "views/gameviews/catan/images/" + tiles.types[i] + ".png";
-        img.classList.add("tile");
-        img.setAttribute("style", "top:"+(TilePos.y[i])+"%;left:"+(TilePos.x[i])+"%;");
-		img.alt = tiles.types[i];
+        img.src = "views/gameviews/catan/images/" + tiles[key].type + ".png";
+        img.id = tiles[key].type;
+        img.setAttribute("style", "position:absolute;height:"+tiles[key].height+"%;width:"+tiles[key].width+"%;top:"+(tiles[key].yPos)+"%;left:"+(tiles[key].xPos)+"%;");
+		div.appendChild(img);
+    }
+    loc.appendChild(div);
+}
+
+function PlaceNumbers(tiles)
+{
+    var loc = document.getElementById("pieces");
+    var div = document.createElement('div');
+    div.id = "numberdiv";
+
+    var tileKeys = Object.keys(tiles);
+    for(var i = 0; i < tileKeys.length; i++)
+    {
+        var key = tileKeys[i];
+        var img = document.createElement("IMG");
+        if (tiles[key].number !== 0)
+        {
+            img.src = "views/gameviews/catan/images/" + tiles[key].number + ".png";
+        }
+        else
+        {
+            img.src = "views/gameviews/catan/images/blank.png";
+        }
+        img.id = tiles[key].number;
+        var l = (tiles[key].xPos) + (tiles[key].width * 0.3);
+        var t = (tiles[key].yPos) + (tiles[key].height * 0.3);
+        var w = tiles[key].width * 0.4;
+        var h = tiles[key].height * 0.4;
+        img.setAttribute("style", "position:absolute;height:"+h+"%;width:"+w+"%;top:"+t+"%;left:"+l+"%;");
 		div.appendChild(img);
     }
     loc.appendChild(div);
@@ -22,18 +51,22 @@ function PlaceTiles(tiles)
 
 function PlaceRobber(tiles)
 {
-    // create and set image
+    var loc = document.getElementById("pieces");
     var div = document.createElement("DIV");
     div.id = "robberdiv";
 
-    var img = document.createElement("IMG");
-    img.src = "views/gameviews/catan/images/robber.png";
-    img.classList.add("robber");
-    var top = TilePos.y[tiles.robber];
-    var left = TilePos.x[tiles.robber];
-	img.setAttribute("style", "z-index:3; top:"+top+"%; left:"+left+"%;");
-	div.appendChild(img);
-
-    var loc = document.getElementById("pieces");
+    var tileKeys = Object.keys(tiles);
+    for(var i = 0; i < tileKeys.length; i++)
+    {
+        var key = tileKeys[i];
+        if (tiles[key].HasRobber)
+        {
+            var img = document.createElement("IMG");
+            img.src = "views/gameviews/catan/images/robber.png";
+            img.id = "robber";
+            img.setAttribute("style", "position:absolute;height:"+tiles[key].height+"%;width:"+tiles[key].width+"%;top:"+(tiles[key].yPos)+"%;left:"+(tiles[key].xPos)+"%;");
+            div.appendChild(img);
+        }
+    }
     loc.appendChild(div);	
 }

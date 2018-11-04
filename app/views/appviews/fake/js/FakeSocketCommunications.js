@@ -70,17 +70,64 @@ function AddSettlement(data)
 
 	var changeItem1 = {};
 	changeItem1.Type = "AddSettlement";
-	changeItem1.Id = "vert_Al";
+	changeItem1.Id = "vert_5_6_10";
 
 	var changeItem2 = {};
 	changeItem2.Type = "AddRoad";
-	changeItem2.Id = "qrp";
+	changeItem2.Id = "edge_1_4_5_TO_4_5_9";
 
 	var changeItem3 = {};
 	changeItem3.Type = "AddSettlement";
-	changeItem3.Id = "vert_CEH";
+	changeItem3.Id = "vert_15_16_19";
 
-	var changeLog = [ changeItem1, changeItem2, changeItem3 ];
+	var changeItem4 = {};
+	changeItem4.Type = "AddCity";
+	changeItem4.Id = "vert_4_8_9"
+
+	var changeItem5 = {};
+	changeItem5.Type = "AddRoad";
+	changeItem5.Id = "edge_10_11_15_TO_11_15_16";
+
+	var changeItem6 = {};
+	changeItem6.Type = "AddRoad";
+	changeItem6.Id = "edge_15_18_19_TO_15_16_19";
+
+	var changeLog = [ changeItem1, changeItem2, changeItem3, changeItem4, changeItem5, changeItem6 ];
+	args.changes = changeLog;
+
+	socket.emit('updategamedata', args);
+}
+
+function AddBadSettlement()
+{
+	var args = {};
+	args.id = socket.id;
+
+	var changeItem1 = {};
+	changeItem1.Type = "AddSettlement";
+	changeItem1.Id = "vert_5_6_10";
+
+	var changeItem2 = {};
+	changeItem2.Type = "AddRoad";
+	changeItem2.Id = "edge_1_4_5_TO_4_5_9";
+
+	var changeItem3 = {};
+	changeItem3.Type = "AddSettlement";
+	changeItem3.Id = "vert_15_16_19";
+
+	var changeItem4 = {};
+	changeItem4.Type = "AddCity";
+	changeItem4.Id = "vert_4_8_9"
+
+	var changeItem5 = {};
+	changeItem5.Type = "AddRoad";
+	changeItem5.Id = "edge_10_11_15_TO_11_15_16";
+
+	var changeItem6 = {};
+	changeItem6.Type = "AddRoad";
+	changeItem6.Id = "edge_15_18_19_TO_15_16_19";
+
+	var changeLog = [ changeItem1, changeItem2, changeItem3, changeItem4, changeItem5, changeItem6 ];
 	args.changes = changeLog;
 
 	socket.emit('updategamedata', args);
