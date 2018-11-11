@@ -1,5 +1,5 @@
 var roadsManager = require('./../js/RoadsManager');
-var testUtils = require('./../../../TestingUtilities');
+var testUtils = require('./../../../ServiceUnitTests/TestingUtilities');
 
 function RunRoadManagerTests()
 {
@@ -27,6 +27,6 @@ function RoadManagerInitializion()
 module.exports = {
     RunTests: function()
     {
-        return RunRoadManagerTests();
+        RunRoadManagerTests();
     }
 }

@@ -8,15 +8,14 @@ function ParseUpdateData(data)
         switch(data.changes[i].Type)
         {
             case "AddSettlement":
-                AddSettlement(data.changes[i].Id);
+                AddSettlement(data.user, data.changes[i].Id);
                 break;
             case "AddCity":
-                AddCity(data.changes[i].Id);
+                AddCity(data.user, data.changes[i].Id);
                 break;
             case "AddRoad":
-                AddRoad(data.changes[i].Id);
+                AddRoad(data.user, data.changes[i].Id);
                 break;
         }
-
     }
 }

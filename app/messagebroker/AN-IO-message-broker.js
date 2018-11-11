@@ -16,22 +16,23 @@ function LoadANSockets()
 			var success = playersService.RemovePlayer(socket.id);
 			var args = {"isRemoved": success};
 			socket.emit('playerremovedresults', args);
-			TV.emit('updateconnectionslist', playersService.PlayerList);
+			TV.emit('updateconnectionslist', playersService.GetPlayerList());
 			console.log("App disconnected, id: " + socket.id);
 		});
 
 		// Player Tracking ===============================================================================
 		socket.on('addplayer', (args) => {
+			console.log("Here");
 			var success = playersService.AddPlayer(args.username, socket.id);
 			socket.emit('playeraddedresult', success);
-			TV.emit('updateconnectionslist', playersService.PlayerList);
+			TV.emit('updateconnectionslist', playersService.GetPlayerList());
 		});
 		socket.on('removeplayer', (args) => {
 			commRulesService.CheckDisconnectedPlayer(socket.id);
 			var success = playersService.RemovePlayer(socket.id);
 			var args = {"isRemoved": success};
 			socket.emit('playerremoved', args);
-			TV.emit('updateconnectionslist', playersService.PlayerList);
+			TV.emit('updateconnectionslist', playersService.GetPlayerList());
 		});
 		
 		// Config Tracking ===============================================================================
@@ -58,25 +59,50 @@ function LoadANSockets()
 			// Persist game configuration and initialize game data.
 			if (commRulesService.CanCommunicate(args.id))
 			{
-				var players = playersService.PlayerList;
+				var players = playersService.GetPlayerList();
 				gameConfigService.SetupGame(args, players);
 				var gameArgs = gameConfigService.GetGameData();
+				console.log(args.gameName);
 				TV.emit('route', args.gameName);
 				AN.emit('startgame', gameArgs);
 			}
 		});
 		socket.on('updategamedata', (args) => {
-			if (commRulesService.CanCommunicate(args.id))
+			var gameService = gameConfigService.Service();
+			var result = {};
+			if (gameService !== undefined)
 			{
-				var gameService = gameConfigService.Service();
-				var updateArgs = "";
-				if (gameService !== undefined)
-				{
-					updateArgs = gameConfigService.Service().Update(args);
-				}
-				TV.emit('updategamedata', updateArgs);
+				result = gameService.Update(args);
+			}
+
+			socket.emit('updategamedataresult', result);
+			if (result.changes.length > 0)
+			{
+				TV.emit('updategamedataresult', result);
 			}
 		});
+
+		// Turn Management ===============================================================================
+		socket.on('updateturn', (args) => {
+			var gameService = gameConfigService.Service();
+			var result = {"isValidRequest" : false, "Reason": "Game Service undefined."};
+			if (gameService !== undefined)
+			{
+				result = gameService.UpdateTurn(args);
+			}
+			
+			socket.emit('updateturnresult', result);
+			if (result.isValidRequest) // Don't notify other users if update turn doesn't work.
+			{
+				socket.broadcast.emit('updateturnresult', result);
+				TV.emit('updateturnresult', result);
+			}
+		})
+
+		// Communication Managemenet =====================================================================
+		socket.on('sendmessage', (args) => {
+			
+		})
 
 		// Forward all events to tv ======================================================================
 		/* var onevent = socket.onevent;

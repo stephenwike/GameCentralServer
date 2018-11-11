@@ -38,6 +38,9 @@ function RenderBoard(data)
     // Set img items to be set on subsequent update calls
     SetRoadSpaces(data.Roads);
     SetCitySpaces(data.Cities);
+
+    // Build player roster
+    BuildPlayerRoster(data.Players);
 }
 
 function SizeGameBoard()

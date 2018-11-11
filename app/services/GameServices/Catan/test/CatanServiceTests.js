@@ -14,6 +14,6 @@ module.exports =
 {
     RunTests: function()
     {
-        return RunCatanTests();
+        RunCatanTests();
     }
 }

@@ -16,7 +16,7 @@ function LoadTVSockets()
 
 		// Player Tracking ===============================================================================
 		socket.on('getconnectionslist', (args) => {
-			socket.emit('updateconnectionlist', playersService.PlayerList);
+			socket.emit('updateconnectionlist', playersService.GetPlayerList());
 		});
 
 		// Config Tracking ===============================================================================

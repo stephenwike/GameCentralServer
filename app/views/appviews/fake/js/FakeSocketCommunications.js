@@ -1,5 +1,8 @@
 var socket = io.connect();
 socket.on("configholding", function (args) { HoldingFunction(args); });
+socket.on("updateturnresult", function (args) { console.log(args); })
+
+var username = "TestUser";
 
 function HoldingFunction(args)
 {
@@ -13,14 +16,19 @@ function HoldingFunction(args)
 			
 function AddUser()
 {
-	var val = document.getElementById('usernameInput').value
+	username = document.getElementById('usernameInput').value;
+	socket.emit('addplayer', { "username" : username, "id" : socket.id });
+}
 
-	socket.emit('addplayer', { "username" : val });
+function HomePage()
+{
+	//socket.emit('loadhome', args);
 }
 
 function SendConfig()
 {
 	var args = {};
+	args.username = username;
 	args.id = socket.id;
 	args.Game = 'Catan';
 
@@ -60,75 +68,74 @@ function SendConfig()
 
 function LoadGame(data)
 {
-	socket.emit('loadgame', { "id": socket.id, "gameName" : "Catan" });
+	username = document.getElementById('usernameInput').value;
+	var args = { "username": username, "id": socket.id, "gameName" : "Catan" };
+	console.log(args)
+	socket.emit('loadgame', args);
 }
 
 function AddSettlement(data)
 {
+	var id = document.getElementById("settlementID").value;
+
 	var args = {};
+	args.username = username;
 	args.id = socket.id;
 
 	var changeItem1 = {};
 	changeItem1.Type = "AddSettlement";
-	changeItem1.Id = "vert_5_6_10";
+	changeItem1.Id = id;
 
-	var changeItem2 = {};
-	changeItem2.Type = "AddRoad";
-	changeItem2.Id = "edge_1_4_5_TO_4_5_9";
-
-	var changeItem3 = {};
-	changeItem3.Type = "AddSettlement";
-	changeItem3.Id = "vert_15_16_19";
-
-	var changeItem4 = {};
-	changeItem4.Type = "AddCity";
-	changeItem4.Id = "vert_4_8_9"
-
-	var changeItem5 = {};
-	changeItem5.Type = "AddRoad";
-	changeItem5.Id = "edge_10_11_15_TO_11_15_16";
-
-	var changeItem6 = {};
-	changeItem6.Type = "AddRoad";
-	changeItem6.Id = "edge_15_18_19_TO_15_16_19";
-
-	var changeLog = [ changeItem1, changeItem2, changeItem3, changeItem4, changeItem5, changeItem6 ];
+	var changeLog = [ changeItem1 ];
 	args.changes = changeLog;
 
 	socket.emit('updategamedata', args);
 }
 
-function AddBadSettlement()
+function AddRoad()
 {
+	var id = document.getElementById("roadID").value;
+
 	var args = {};
+	args.username = username;
 	args.id = socket.id;
 
 	var changeItem1 = {};
-	changeItem1.Type = "AddSettlement";
-	changeItem1.Id = "vert_5_6_10";
+	changeItem1.Type = "AddRoad";
+	changeItem1.Id = id;
 
-	var changeItem2 = {};
-	changeItem2.Type = "AddRoad";
-	changeItem2.Id = "edge_1_4_5_TO_4_5_9";
+	var changeLog = [ changeItem1 ];
+	args.changes = changeLog;
+	
+	console.log(args);
+	socket.emit('updategamedata', args);
+}
 
-	var changeItem3 = {};
-	changeItem3.Type = "AddSettlement";
-	changeItem3.Id = "vert_15_16_19";
+function AddCity()
+{
+	var id = document.getElementById("cityID").value;
 
-	var changeItem4 = {};
-	changeItem4.Type = "AddCity";
-	changeItem4.Id = "vert_4_8_9"
+	var args = {};
+	args.username = username;
+	args.id = socket.id;
 
-	var changeItem5 = {};
-	changeItem5.Type = "AddRoad";
-	changeItem5.Id = "edge_10_11_15_TO_11_15_16";
+	var changeItem1 = {};
+	changeItem1.Type = "AddCity";
+	changeItem1.Id = id;
 
-	var changeItem6 = {};
-	changeItem6.Type = "AddRoad";
-	changeItem6.Id = "edge_15_18_19_TO_15_16_19";
-
-	var changeLog = [ changeItem1, changeItem2, changeItem3, changeItem4, changeItem5, changeItem6 ];
+	var changeLog = [ changeItem1 ];
 	args.changes = changeLog;
 
 	socket.emit('updategamedata', args);
+}
+
+function EndTurn()
+{
+	var id = document.getElementById("cityID").value;
+
+	var args = {};
+	args.username = username;
+	args.id = socket.id;
+
+	socket.emit('updateturn', args);
 }

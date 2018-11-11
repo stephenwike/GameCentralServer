@@ -133,5 +133,14 @@ module.exports = {
     GetRoads: function()
     {
         return Roads;
+    },
+    AddRoad: function(username, data)
+    {
+        console.log("Adding a road using data:");
+        console.log(username);
+        console.log(data);
+        Roads[data.Id].OwnedBy = username;
+        return true;
+        //Roads[]
     }
 }

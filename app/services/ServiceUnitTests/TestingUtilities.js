@@ -3,6 +3,7 @@ testObject.Tests = 0;
 testObject.Pass = 0;
 testObject.Failed = 0;
 testObject.Ignored = 0;
+testObject.FailedMessages = [];
 
 var localTest = {};
 localTest.Tests = [];
@@ -11,9 +12,16 @@ localTest.Failed = 0;
 localTest.Ignored = 0;
 localTest.Name = "";
 
-function LogResults(count, tests)
+function LogResults(count, tests, errors)
 {
     console.log("Tests: " + count + ", Passed: " + tests.Pass + ", Failed: " + tests.Failed + ", Ignored: " + tests.Ignored);
+    if (errors !== undefined)
+    {
+        for (var i = 0; i < errors.length; ++i)
+        {
+            console.log(errors[i]);
+        }
+    } 
 }
 
 module.exports = {
@@ -41,12 +49,12 @@ module.exports = {
             }else
             {
                 ++localTest.Failed;
-                console.log(localTest.Tests[i].error);
+                testObject.FailedMessages.push(localTest.Name + ": " + localTest.Tests[i].error);
             }
         }
         
         // log local test results
-        LogResults(localTest.Tests.count, localTest);
+        LogResults(localTest.Tests.length, localTest);
 
         // Commit results to global results
         testObject.Tests += localTest.Tests.length;
@@ -64,6 +72,12 @@ module.exports = {
     },
     LogGlobalResults: function()
     {
-        LogResults(testObject.Tests, testObject);
+        console.log("***************************************************************");
+        console.log("************************RESULTS********************************");
+        console.log("***************************************************************");
+        LogResults(testObject.Tests, testObject, testObject.FailedMessages);
+        console.log("***************************************************************");
+        console.log("***************************************************************");
+        console.log("***************************************************************");
     }
 }

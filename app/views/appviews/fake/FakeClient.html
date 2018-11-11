@@ -4,25 +4,56 @@
 		<link rel="stylesheet" type="text/css" href="views/appviews/fake/css/FakeStyles.css">
 	</head>
 	<body>
-		<form>
-			username <input id="usernameInput" type="text" name="username">
-		</form>
 		<div id="userArea">
+			<form>
+				<input id="usernameInput" type="text" name="username">
+			</form>
 			<button onclick="AddUser()">Add User</button>
 			<button onclick="RemoveUser()">Remove User</button>
 		</div>
 		
-		<div id="configArea">
+		<div id="routingArea">
+			<button onclick="HomePage()">Home Page</button>
 			<button onclick="SendConfig()">Send Config</button>
+			<button onclick="LoadGame()">Load Game</button>
 		</div>
 		
 		<div id="gameArea">
-			<button onclick="LoadGame()">Load Game</button>
-			<button onclick="AddSettlement()">Add Settlement</button>
-			<button onclick="AddBadSettlement()">Bad Settlement</button>
+			<div><form style="display: inline;">
+				<input id="settlementID" type="text" name="username" value="vert_5_6_10">
+			</form>
+			<button onclick="AddSettlement()">Add Settlement</button></div>
+			<div><form style="display: inline;">
+				<input id="roadID" type="text" name="username" value="edge_1_4_5_TO_4_5_9">
+			</form>
+			<button onclick="AddRoad()">Add Road</button></div>
+			<div><form style="display: inline;">
+				<input id="cityID" type="text" name="username" value="vert_4_8_9">
+			</form>
+			<button onclick="AddCity()">Add City</button></div>
+			<div><button onclick="EndTurn()">End Turn</button></div>
+		</div>
+
+		<div id="SelectionBoard" height="500" width="500">
+			<div id="ButtonBox">
+
+			</div>
+			<canvas id="LayoutCanvas" height="500" width="500"></canvas>
 		</div>
 		
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="views/appviews/fake/js/FakeSocketCommunications.js"></script>
+		<script src="views/appviews/fake/js/GridLines.js"></script>
+		<script src="views/appviews/fake/js/BindHexes.js"></script>
+		<script src="views/appviews/fake/js/Hexes.js"></script>
+		<script>
+			var r = 11 / ( 7 * Math.sqrt(3) ); 	// Ratio between height and width.
+			var p = (1 - r) / 2; 				// Padding ratio for height to make square ratio.
+	
+			// LayoutCanvas
+			DrawGridLines();
+			DrawBindHexes();
+			DrawHexes();
+		</script>
 	</body>
 </html>

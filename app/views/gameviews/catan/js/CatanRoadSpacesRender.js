@@ -13,20 +13,25 @@ function SetRoadSpaces(roads)
 		var x = roads[key].xPos;
 		var y = roads[key].yPos;
 
+		var container = document.createElement("DIV");
+		container.id = key + "_container";
+		container.setAttribute('style', "position:absolute;z-index:5;width:"+w+"%;height:"+h+"%;left:"+x+"%;top:"+y+"%;");
+
 		var img = document.createElement("IMG");
 		img.id = key;
 		img.alt = roads[key].rot;
 		img.src = "views/gameviews/catan/images/blank.png";
-		img.setAttribute('style', "position:absolute;z-index:5;width:"+w+"%;height:"+h+"%;left:"+x+"%;top:"+y+"%;-webkit-filters:hue-rotate(100deg); filters:hue-rotate(100deg);");
-		div.appendChild(img);
+		container.appendChild(img);
+		div.appendChild(container);
 	}
     loc.appendChild(div);
 }
 
-function AddRoad(id)
+function AddRoad(user, Eid)
 {
 	console.log("adding road...");
-	var loc = document.getElementById(id);
+	var loc = document.getElementById(Eid);
+	loc.setAttribute('style', "width:100%;height:100%; -webkit-filter:hue-rotate("+ user.Color +"deg); filter:hue-rotate("+ user.Color +"deg);");
 
     if(loc != undefined)
     {

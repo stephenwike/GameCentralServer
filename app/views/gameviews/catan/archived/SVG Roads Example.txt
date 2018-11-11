@@ -1,0 +1,81 @@
+var svgNS = "http://www.w3.org/2000/svg";
+		var svg = document.createElementNS(svgNS, "svg");
+		svg.id = roadKeys[i];
+		svg.setAttribute('style', "position:absolute;z-index:5;width:"+w+"%;height:"+h+"%;left:"+x+"%;top:"+y+"%;background:rgba(255, 0, 0, 0)");
+		var ratdiff = roads[key].width / roads[key].height;
+		
+		var testcolor;
+		
+		// Get details by rotation
+		var abw, abh;
+		var rh, rw, rx, ry, tp, sp;
+		if (roads[key].rot === -30)
+		{
+			// Get binding box dimensions
+			abw = 100 * ratdiff;
+			abh = 100;
+			s = 20;
+			rw = s;
+			rh = s;
+			rx = 0;
+			ry = abh - rh;
+			tp = 0 + "," + (abh - s) + " " + (abw - s) + "," + 0 + " " + abw + "," + 0 + " " + s + "," + (abh - s);
+			sp = s + "," + abh + " " + abw + "," + s + " " + abw + "," + 0 + " " + s + "," + (abh - s);
+			testcolor = 'rgb(255,66,255)';
+		}
+		else if (roads[key].rot === 30)
+		{
+			abw = 100 * ratdiff;
+			abh = 100;
+			s = 20;
+			rw = s;
+			rh = s;
+			rx = abw - rw;
+			ry = abh - rh;
+			tp = abw + "," + (abh - s) + " " + s + "," + 0 + " " + 0 + "," + 0 + " " + (abw - s) + "," + (abh - s);
+			sp = (abw - s) + "," + abh + " " + 0 + "," + s + " " + 0 + "," + 0 + " " + (abw - s) + "," + (abh - s);
+			testcolor = 'rgb(255,255,0)';
+		}
+		else if (roads[key].rot === 90)
+		{
+			abw = 20;
+			abh = 20 * (1 / ratdiff);
+			s = 20;
+			rw = s;
+			rh = s;
+			rx = 0;
+			ry = abh - s;
+			tp = 0 + "," + (abh - s) + " " + 0 + "," + 0 + " " + abw + "," + 0 + " " + abw + "," + (abh - s);
+			sp = "";  // No side piece
+			testcolor = 'rgb(0,255,255)';
+		}
+
+		// Set svg viewbox
+		svg.setAttribute("viewBox", [0, 0, abw, abh].join(" "));
+
+		// Add top
+		var top = document.createElementNS(svgNS, 'polygon');
+		top.setAttributeNS(null, "points", tp);
+		top.style.fill = testcolor;
+		top.style.strokeWidth = '2';
+		top.style.stroke = 'rgb(0,0,0)';
+		svg.appendChild(top);
+
+		// Add side
+		var side = document.createElementNS(svgNS, 'polygon');
+		side.setAttributeNS(null, "points", sp);
+		side.style.fill = testcolor;
+		side.style.strokeWidth = '2';
+		side.style.stroke = 'rgb(0,0,0)';
+		svg.appendChild(side);
+
+		// Add facing square
+		var rect = document.createElementNS(svgNS, 'rect');
+		rect.setAttributeNS(null, 'x', rx);
+        rect.setAttributeNS(null, 'y', ry);
+		rect.setAttributeNS(null, 'width', rw);
+		rect.setAttributeNS(null, 'height', rh);
+		rect.style.fill = testcolor; // Get Color From Player
+		rect.style.strokeWidth = '2';
+		rect.style.stroke = 'rgb(0,0,0)';
+		svg.appendChild(rect);

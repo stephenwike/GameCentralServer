@@ -85,5 +85,45 @@ module.exports = {
     GetCities: function()
     {
         return Cities;
-    }
+	},
+	AddSettlement: function(username, data)
+	{
+		var retVal = true;
+		// Validate
+		// Check if player has enough cards.
+		
+		// Check for self.
+
+		// Check for adjacencies.
+
+		// Check for roads if not first two settlements.
+
+		// If conditions met, add settlement.
+		if (retVal)
+		{
+			Cities[data.Id].IsSettledBy = username;
+		}
+		
+		return retVal;
+	},
+	AddCity: function(username, data)
+	{
+		var retVal = true;
+		// Validate
+		// Check if player has enough cards.
+
+		// Check for self.
+
+		// Check for adjacencies.
+
+		// Check for roads if not first two settlements.
+
+		// If conditions met, add city.
+		if (retVal)
+		{
+			Cities[data.Id].IsCity = true;
+		}
+		
+		return retVal;
+	}
 }

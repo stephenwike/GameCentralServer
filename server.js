@@ -12,7 +12,7 @@ var tv_app_port = 3000;
 var an_app_port = 4000;
 
 // testing ======================================================================
-require('./app/services/TestingService').RunTests();
+require('./app/services/ServiceUnitTests/TestingService').RunTests();
 
 // socket io +===================================================================
 require('./app/messagebroker/TV-IO-message-broker').Load(tv_io);

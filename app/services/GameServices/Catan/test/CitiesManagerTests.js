@@ -1,5 +1,5 @@
 var citiesManager = require('./../js/CitiesManager');
-var testUtils = require('./../../../TestingUtilities');
+var testUtils = require('./../../../ServiceUnitTests/TestingUtilities');
 
 function RunCityManagerTests()
 {
@@ -27,6 +27,6 @@ function CityManagerInitialization()
 module.exports = {
     RunTests: function()
     {
-        return RunCityManagerTests();
+        RunCityManagerTests();
     }
 }

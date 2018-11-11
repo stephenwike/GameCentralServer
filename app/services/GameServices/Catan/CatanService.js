@@ -5,7 +5,29 @@ var Ports = require('./js/PortsManager');
 var Cities = require('./js/CitiesManager');
 var Roads = require('./js/RoadsManager');
 var Config = {};
-var ChangeLog;
+
+function ValidatePlayer(data)
+{
+    var activePlayer = Players.GetActivePlayer();
+        console.log("Active Player:");
+        console.log(activePlayer);
+        var result = {};
+        if (activePlayer === undefined)
+        {
+            result = { "isValidResuest": false, "Reason": "Active Player Undefined." }
+        }
+        else if (data.username === activePlayer.Username && activePlayer.Username !== undefined)
+        {
+            result = { "isValidRequest": true, "Reason": "Valid Active Player." }
+        }
+        else
+        {
+            result = { "isValidResuest": false, "Reason": "Not Active Player." }
+        }
+        console.log(result);
+        return result;
+
+}
 
 module.exports = {
     InitializeGame: function(config, connections)
@@ -69,9 +91,57 @@ module.exports = {
 
         return data;
     },
-    Update(data)
+    Update: function(data)
     {
-        ChangeLog = data;
-        return ChangeLog;
+        console.log("Catan Service: Update...");
+
+        var result = ValidatePlayer(data);
+
+        var acceptedChanges = {};
+        acceptedChanges.user = Players.GetActivePlayer();
+        acceptedChanges.changes = [];
+        if(result.isValidRequest)
+        {
+            // Parse Change Log
+            for (var i = 0; i < data.changes.length; ++i)
+            {
+                var canChange = false;
+                switch(data.changes[i].Type)
+                {
+                    case "AddSettlement":
+                        canChange = Cities.AddSettlement(data.username, data.changes[i]);
+                        break;
+                    case "AddCity":
+                        canChange = Cities.AddCity(data.username, data.changes[i]);
+                        break;
+                    case "AddRoad":
+                        canChange = Roads.AddRoad(data.username, data.changes[i]);
+                        break;
+                }
+                if (canChange) acceptedChanges.changes.push(data.changes[i]);
+            }
+            return acceptedChanges;
+        }
+        else
+        {
+            return acceptedChanges;
+        }
+    },
+    UpdateTurn : function(data)
+    {
+        console.log("Catan Service: Update Turn...");
+
+        var result = ValidatePlayer(data);
+
+        if(result.isValidRequest)
+        {
+            var nextPlayer = Players.GetNextPlayer();
+            result.username = nextPlayer.username;
+            result.id = nextPlayer.id;
+            console.log("Next Player");
+            console.log(nextPlayer);
+        }
+
+        return result;
     }
 }
