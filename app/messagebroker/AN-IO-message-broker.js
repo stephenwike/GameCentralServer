@@ -78,6 +78,7 @@ function LoadANSockets()
 			socket.emit('updategamedataresult', result);
 			if (result.changes.length > 0)
 			{
+				socket.broadcast.emit('updateturnresult', result);
 				TV.emit('updategamedataresult', result);
 			}
 		});

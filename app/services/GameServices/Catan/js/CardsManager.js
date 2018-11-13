@@ -30,6 +30,46 @@ function ShuffleDevCards()
     Cards.Dev.types = cardsTemp;
 }
 
+function RollDiceAndGiveCards(players, tiles)
+{
+    // Simulate two 6 sided dice
+    var d1 = Math.ceil(Math.random() * 6);
+    var d2 = Math.ceil(Math.random() * 6);
+    var roll = d1 + d2;
+
+    // Get Available resource tiles
+    var availableResourceTileKeys = [];
+    var tileKeys = Object.keys(tiles);
+    for (var i = 0; i < tileKeys.length; ++i)
+    {
+        var key = tileKeys[i];
+
+        // Does the tile number match the roll?
+        // Does the tile have a robber?
+        if (tiles[key].number === roll 
+            && !tiles[key].HasRobber)
+        {
+            availableResourceTileKeys.push(key);
+        }
+    }
+
+    // Give Cards to adjacent players
+    for (var i = 0; i < availableResourceTileKeys.length; ++i)
+    {
+        var key = availableResourceTileKeys[i];
+        var res = tiles[key].type;
+
+        var playerKeys = Object.keys(players.Player);
+        for (var j = 0; j < playerKeys.length; ++j)
+        {
+            var pKey = playerKeys[j];
+
+            // Determine if player is adjacent
+            //if (players[pKey].)
+        }
+    }
+}
+
 module.exports = {
     Init: function()
     {
@@ -42,5 +82,9 @@ module.exports = {
     GetCards: function()
     {
         return Cards;
+    },
+    RollAndProduce: function(players, tiles)
+    {
+        return RollDiceAndGiveCards(players, tiles);
     }
 }

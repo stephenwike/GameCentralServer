@@ -108,6 +108,9 @@ module.exports = {
                 var canChange = false;
                 switch(data.changes[i].Type)
                 {
+                    case "Roll":
+                        canChange = Cards.RollAndProduce(Players.GetPlayers());
+                        break;
                     case "AddSettlement":
                         canChange = Cities.AddSettlement(data.username, data.changes[i]);
                         break;
