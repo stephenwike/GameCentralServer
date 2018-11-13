@@ -1,6 +1,7 @@
 var socket = io.connect();
 socket.on("configholding", function (args) { HoldingFunction(args); });
-socket.on("updateturnresult", function (args) { console.log(args); })
+socket.on("updateturnresult", function (args) { console.log(args); });
+socket.on("startgame", function(args) { MakeButtons(args); })
 
 var username = "TestUser";
 
